@@ -1,7 +1,7 @@
-import posts, { IPost } from '../config/post.config'
-
 import marked from 'marked'
 import path from 'path'
+
+import { IPost } from '../config/post.config'
 
 export class PostUtil {
   private readonly posts: IPost[]
@@ -18,11 +18,7 @@ export class PostUtil {
     this.rootPath = rootPath
   }
 
-  getPosts(
-    page: number,
-    limit: number = 10,
-    includeNonPublished: boolean = false
-  ): IPost[] {
+  getPosts(page: number, limit = 10, includeNonPublished = false): IPost[] {
     const offset: number = (page - 1) * limit
 
     if (includeNonPublished) {
@@ -34,7 +30,7 @@ export class PostUtil {
 
   getPostByTitle(title: string): IPost {
     const found: IPost | undefined = this.posts.find(
-      (post: IPost) => post.title === title
+      (post: IPost) => post.title === title || this.dashedTitle(post) === title
     )
     if (!found) throw new Error('Failed to find post by title')
 
@@ -70,6 +66,8 @@ export class PostUtil {
     url.pathname = path.join(this.rootPath, post.category, post.thumbnailName)
     return url.href
   }
-}
 
-export const postUtil: PostUtil = new PostUtil(posts, './resources')
+  dashedTitle(post: IPost): string {
+    return post.title.replace(/ /g, '-').toLowerCase()
+  }
+}

@@ -1,8 +1,12 @@
-import { IPost } from '../config/post.config'
-import { Link } from 'react-router-dom'
-import TagSpreader from './TagSpreader'
-import { postUtil } from '..'
+import React from 'react'
+
+import Image from 'next/image'
+import Link from 'next/link'
 import styled from 'styled-components'
+
+import { IPost } from '../config/post.config'
+import { postUtil } from '../utils'
+import TagSpreader from './TagSpreader'
 
 interface IStyledArticle {
   hasThumbnail: boolean
@@ -49,7 +53,7 @@ const StyledArticle = styled.article<IStyledArticle>`
     grid-area: description;
   }
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 800px) {
     & {
       grid-template-columns: 1fr auto;
       grid-template-rows: auto auto auto 1fr auto;
@@ -79,25 +83,22 @@ const StyledArticle = styled.article<IStyledArticle>`
 
 export interface PostPreviewCardProps extends React.HTMLProps<HTMLElement> {
   post: IPost
-  linkBuilder?: (post: IPost) => string
 }
 
 const PostPreviewCard = (props: PostPreviewCardProps): JSX.Element => {
   const post: IPost = props.post
-  const linkBuilder =
-    props.linkBuilder || ((post: IPost): string => `/posts/${post.title}`)
 
   return (
-    <Link to={linkBuilder(post)}>
+    <Link href={`/posts/${postUtil.dashedTitle(post)}`} passHref>
       <StyledArticle hasThumbnail={Boolean(post.thumbnailName)}>
         <h2 id="title">{post.title}</h2>
         <p id="date">{post.publishedAt.toLocaleDateString()}</p>
         <TagSpreader tags={post.tags} />
         {post.thumbnailName ? (
-          <img
+          <Image
             id="thumbnail"
             src={postUtil.getThumbnailSrc(post)}
-            alt={`Thumbnail of ${post.title}`}
+            alt={post.title}
           />
         ) : (
           ''

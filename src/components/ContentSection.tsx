@@ -8,7 +8,7 @@ const ContentSection = styled.section`
   overflow: hidden;
   overflow: auto;
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 800px) {
     & {
       max-width: none;
     }

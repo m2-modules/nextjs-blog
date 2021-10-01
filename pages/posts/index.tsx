@@ -1,7 +1,11 @@
+import React from 'react'
+
 import { NextPage } from 'next'
 
-const Post: NextPage = (): JSX.Element => {
-  return <h1>Post</h1>
+import PostList from '../../src/components/PostList'
+
+const PostListPage: NextPage = (): JSX.Element => {
+  return <PostList />
 }
 
-export default Post
+export default PostListPage

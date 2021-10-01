@@ -36,7 +36,7 @@
   grid-area: footer;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   #__next > header {
     grid-template-columns: 1fr;
     grid-template-areas: 'title' 'social';
