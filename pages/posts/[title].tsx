@@ -1,22 +1,43 @@
-import React from 'react'
-
-import { NextPage } from 'next'
+import {
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  NextPage,
+} from 'next'
 import { NextRouter, useRouter } from 'next/router'
 
-import PostDetail from '../../src/components/PostDetail'
 import { IPost } from '../../src/config/post.config'
+import PostDetail from '../../src/components/PostDetail'
+import React from 'react'
 import { postUtil } from '../../src/utils'
+
+export type PostDetailPageProps = {
+  postTitle: string
+}
+
+export async function getServerSideProps(
+  context: GetServerSidePropsContext
+): Promise<GetServerSidePropsResult<PostDetailPageProps>> {
+  const postTitle: string | string[] | undefined = context.query.title
+  if (!postTitle || Array.isArray(postTitle)) {
+    return {
+      notFound: true,
+    }
+  } else {
+    return {
+      props: { postTitle },
+    }
+  }
+}
 
 const PostDetailPage: NextPage = (): JSX.Element => {
   const router: NextRouter = useRouter()
+  const title: string | string[] | undefined = router.query.title
 
-  const title: string = router.query.title as string
-  console.log(title)
-  if (title) {
+  if (!title || Array.isArray(title)) {
+    return <h1>No post found</h1>
+  } else {
     const post: IPost = postUtil.getPostByTitle(title)
     return <PostDetail post={post} />
-  } else {
-    return <h1>No post found</h1>
   }
 }
 

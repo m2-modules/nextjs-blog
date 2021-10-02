@@ -1,21 +1,19 @@
 import React, {
-  createRef,
   RefObject,
+  createRef,
   useCallback,
   useEffect,
   useState,
 } from 'react'
 
-import Image from 'next/image'
-import styled from 'styled-components'
-
-import DrawPanel from '@m2-modules/draw-panel'
-import { FormatListNumbered } from '@material-ui/icons'
-
 import ContentIndexer from '../components/ContentIndexer/ContentIndexer'
 import ContentSection from '../components/ContentSection'
+import DrawPanel from '@m2-modules/draw-panel'
+import { FormatListNumbered } from '@material-ui/icons'
 import { IPost } from '../config/post.config'
+import Image from 'next/image'
 import { postUtil } from '../utils'
+import styled from 'styled-components'
 
 const TitleContainer = styled.div`
   display: flex;
@@ -43,6 +41,7 @@ export type PostDetailProps = {
 const PostDetail = (props: PostDetailProps): JSX.Element => {
   const post: IPost = props.post
   const [asideOpen, setAsideOpen] = useState<boolean>(false)
+  const [content, setContent] = useState<string | null>(null)
 
   const contentContainerRef: RefObject<HTMLDivElement> =
     createRef<HTMLDivElement>()
@@ -61,6 +60,7 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
       if (!contentSection || !post) return
 
       const content: string = await postUtil.getContent(post)
+      setContent(content)
       contentSection.innerHTML = content
     }
 
@@ -81,13 +81,18 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
       ) : (
         ''
       )}
-      <DrawPanel
-        position="right"
-        open={asideOpen}
-        closeHandler={closeAsidePanel}
-      >
-        <ContentIndexer />
-      </DrawPanel>
+
+      {content ? (
+        <DrawPanel
+          position="right"
+          open={asideOpen}
+          closeHandler={closeAsidePanel}
+        >
+          <ContentIndexer content={content} />
+        </DrawPanel>
+      ) : (
+        ''
+      )}
 
       <ContentContainer ref={contentContainerRef} />
     </ContentSection>

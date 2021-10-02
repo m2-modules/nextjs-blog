@@ -1,25 +1,24 @@
-import React, { useState } from 'react'
+import { Heading, organizeHeadings } from './Heading'
+import React, { useEffect, useState } from 'react'
 
 import styled from 'styled-components'
-
-import { Heading } from './Heading'
 
 const StyledOList = styled.ol`
   padding: 0px 40px;
 `
 
-const ContentIndexer = (): JSX.Element => {
+export type ContentIndexerProps = {
+  content: string
+}
+
+const ContentIndexer = (props: ContentIndexerProps): JSX.Element => {
+  const content: string = props.content
   const [headings, setHeadings] = useState<Heading[]>([])
 
-  // useEffect(() => {
-  //   if (!content) {
-  //     setHeadings([])
-  //   } else {
-  //     const organizedHeadings: Heading[] = organizeHeadings(content)
-
-  //     setHeadings(organizedHeadings)
-  //   }
-  // }, [content])
+  useEffect(() => {
+    if (!content) return
+    setHeadings(organizeHeadings(content))
+  }, [content])
 
   return headings.length ? (
     <StyledOList>

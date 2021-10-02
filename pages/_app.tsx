@@ -6,7 +6,7 @@ import PageLayout from '../src/components/PageLayout'
 import React from 'react'
 
 const MainApp = ({ Component, pageProps }: AppProps): JSX.Element => {
-  return <PageLayout component={<Component {...pageProps} />} />
+  return <PageLayout component={<Component />} {...pageProps} />
 }
 
 export default MainApp
