@@ -7,8 +7,12 @@
 1. Allow to use predefined `Github Action`
    - You can activate predefined github action at `Action` menu.
 1. After you activate `Github Action` you can deploy your changes by only pushing your changes on your repository.
+1. Change github page root directory to `/docs`. You can change it in `Settings > Pages` on your github repository.
+1. Add your own posting and push it to your repository
+   - To deploy it you should push something at least once.
+   - If everything is ready you can see your website through your own github page URL.
 
-## To write your own content
+## To write your own posting
 
 1. Create new `markdown` file in `/public/resources/[CATEGORY]/[ANY-FILE-NAME].md`
 
@@ -16,10 +20,10 @@
    - `ANY-FILE_NAME` is element of consisting URL path.
    - During building time `file name` will be changed into URL friendly pattern. Therefore it is recommended to use `English` only
 
-2. Add configuration for newly created content
+2. Add configuration for newly created posting
    - Open up `post.config.ts` file from `/src/config`
    - There might be bunch of sample posting.\
-   - You can add your newly created content by adding new element which has same structure compared with sample posting config.
+   - You can add your newly created posting by adding new element which has same structure compared with sample posting config.
 
 ## Detail of configurations
 
