@@ -31,11 +31,15 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
     <Head>
       <title>{title}</title>
 
+      <meta property="og:title" content={title} />
+
       {descriptions?.length ? (
-        <meta name="description" content={descriptions.join(',')} />
+        <meta property="og:description" content={descriptions.join(',')} />
       ) : (
         ''
       )}
+
+      <link rel="favicon" href="favicon.ico" type="image/x-icon">
     </Head>
   )
 }
