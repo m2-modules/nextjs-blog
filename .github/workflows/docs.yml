@@ -1,0 +1,22 @@
+name: Docs
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Yarn install
+        run: yarn install
+
+      - name: Build docs
+        run: yarn docs
+
+      - name: Add & commit
+        uses: EndBug/add-and-commit@v7.3.0
