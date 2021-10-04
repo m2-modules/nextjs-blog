@@ -39,7 +39,7 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
         ''
       )}
 
-      <link rel="favicon" href="favicon.ico" type="image/x-icon">
+      <link rel="favicon" href="favicon.ico" type="image/x-icon" />
     </Head>
   )
 }
