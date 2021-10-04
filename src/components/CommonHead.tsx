@@ -26,7 +26,6 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
   const descriptions: string[] = []
   if (menuConfig?.description) descriptions.push(menuConfig.description)
   if (props.descriptions?.length) descriptions.push(...props.descriptions)
-  console.log(descriptions)
 
   return (
     <Head>

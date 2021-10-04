@@ -1,12 +1,14 @@
 import {
-  GetServerSidePropsContext,
-  GetServerSidePropsResult,
+  GetStaticPathsContext,
+  GetStaticPathsResult,
+  GetStaticPropsContext,
+  GetStaticPropsResult,
   NextPage,
 } from 'next'
 import { NextRouter, useRouter } from 'next/router'
+import posts, { IPost } from '../../src/config/post.config'
 
 import CommonHead from '../../src/components/CommonHead'
-import { IPost } from '../../src/config/post.config'
 import PostDetail from '../../src/components/PostDetail'
 import React from 'react'
 import { postUtil } from '../../src/utils'
@@ -15,18 +17,21 @@ export type PostDetailPageProps = {
   postTitle: string
 }
 
-export async function getServerSideProps(
-  context: GetServerSidePropsContext
-): Promise<GetServerSidePropsResult<PostDetailPageProps>> {
-  const postTitle: string | string[] | undefined = context.query.title
-  if (!postTitle || Array.isArray(postTitle)) {
-    return {
-      notFound: true,
-    }
-  } else {
-    return {
-      props: { postTitle },
-    }
+export async function getStaticProps(
+  context: GetStaticPropsContext
+): Promise<GetStaticPropsResult<PostDetailPageProps>> {
+  const postTitle = context.params?.title as string
+  return {
+    props: { postTitle },
+  }
+}
+
+export async function getStaticPaths(): Promise<GetStaticPathsResult> {
+  return {
+    paths: posts.map((post: IPost) => ({
+      params: { title: postUtil.dashedTitle(post) },
+    })),
+    fallback: false,
   }
 }
 
