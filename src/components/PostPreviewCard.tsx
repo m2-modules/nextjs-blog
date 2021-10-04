@@ -1,5 +1,4 @@
 import { IPost } from '../config/post.config'
-import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import TagSpreader from './TagSpreader'
@@ -79,6 +78,17 @@ const StyledArticle = styled.article<IStyledArticle>`
   }
 `
 
+const StyledImg = styled.img`
+  max-width: 20vw;
+  margin: auto;
+
+  @media only screen and (max-width: 800px) {
+    & {
+      max-width: 70vw;
+    }
+  }
+`
+
 export interface PostPreviewCardProps extends React.HTMLProps<HTMLElement> {
   post: IPost
 }
@@ -93,12 +103,10 @@ const PostPreviewCard = (props: PostPreviewCardProps): JSX.Element => {
         <p id="date">{new Date(post.publishedAt).toLocaleDateString()}</p>
         <TagSpreader tags={post.tags} />
         {post.thumbnailName ? (
-          <Image
+          <StyledImg
             id="thumbnail"
             src={postUtil.getThumbnailSrc(post)}
             alt={post.title}
-            width={'400px'}
-            height={'400px'}
           />
         ) : (
           ''

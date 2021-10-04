@@ -11,7 +11,6 @@ import ContentSection from '../components/ContentSection'
 import DrawPanel from '@m2-modules/draw-panel'
 import { FormatListNumbered } from '@material-ui/icons'
 import { IPost } from '../config/post.config'
-import Image from 'next/image'
 import { postUtil } from '../utils'
 import styled from 'styled-components'
 
@@ -34,6 +33,10 @@ const TitleContainer = styled.div`
 const ContentContainer = styled.div`
   padding: 20px;
   overflow: auto;
+`
+
+const StyledImg = styled.img`
+  max-width: 100vw;
 `
 
 export type PostDetailProps = {
@@ -63,7 +66,7 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
 
       const content: string = await postUtil.getContent(post)
       setContent(content)
-      contentSection.innerHTML = content
+      contentSection.innerHTML += content
     }
 
     refreshPostContent()
@@ -78,12 +81,6 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
         </button>
       </TitleContainer>
 
-      {post.thumbnailName ? (
-        <Image src={postUtil.getThumbnailSrc(post)} alt={`${post.title}`} />
-      ) : (
-        ''
-      )}
-
       {content ? (
         <DrawPanel
           position="right"
@@ -96,7 +93,16 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
         ''
       )}
 
-      <ContentContainer ref={contentContainerRef} />
+      <ContentContainer ref={contentContainerRef}>
+        {post.thumbnailName ? (
+          <StyledImg
+            src={postUtil.getThumbnailSrc(post)}
+            alt={`${post.title}`}
+          />
+        ) : (
+          ''
+        )}
+      </ContentContainer>
     </ContentSection>
   ) : (
     <></>
