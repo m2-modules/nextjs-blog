@@ -9,11 +9,11 @@ export interface IBlogConfig {
 }
 
 export const blogConfig: IBlogConfig = {
-  title: 'My Blog',
+  title: 'Code Logs',
   socials: [
-    { type: 'GitHub', url: 'https://github.com/your_account' },
-    { type: 'Facebook', url: 'https://your/Facebook/url' },
-    { type: 'Instagram', url: 'https://your/Instagram/url' },
+    { type: 'GitHub', url: 'https://github.com/possible819' },
+    // { type: 'Facebook', url: 'https://your/Facebook/url' },
+    // { type: 'Instagram', url: 'https://your/Instagram/url' },
     // { type: 'LinkedIn', url: 'https://your/LinkedIn/url' },
     // { type: 'Pinterest', url: 'https://your/Pinterest/url' },
     // { type: 'Reddit', url: 'https://your/Reddit/url' },
