@@ -62,9 +62,7 @@ export class PostUtil {
   private buildThumbnailPath(post: IPost): string {
     if (!post.thumbnailName) throw new Error('No specified thumbnail')
 
-    const url: URL = new URL(window.origin)
-    url.pathname = path.join(this.rootPath, post.category, post.thumbnailName)
-    return url.href
+    return '/' + path.join(this.rootPath, 'assets', post.thumbnailName)
   }
 
   dashedTitle(post: IPost): string {

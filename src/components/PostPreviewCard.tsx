@@ -97,6 +97,8 @@ const PostPreviewCard = (props: PostPreviewCardProps): JSX.Element => {
             id="thumbnail"
             src={postUtil.getThumbnailSrc(post)}
             alt={post.title}
+            width={'400px'}
+            height={'400px'}
           />
         ) : (
           ''
