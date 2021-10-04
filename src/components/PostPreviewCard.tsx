@@ -1,12 +1,10 @@
-import React from 'react'
-
+import { IPost } from '../config/post.config'
 import Image from 'next/image'
 import Link from 'next/link'
-import styled from 'styled-components'
-
-import { IPost } from '../config/post.config'
-import { postUtil } from '../utils'
+import React from 'react'
 import TagSpreader from './TagSpreader'
+import { postUtil } from '../utils'
+import styled from 'styled-components'
 
 interface IStyledArticle {
   hasThumbnail: boolean

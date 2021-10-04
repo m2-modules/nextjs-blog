@@ -1,11 +1,10 @@
 import React, { useCallback } from 'react'
 
-import InfiniteList from '@m2-modules/infinite-list'
-
-import { IPost } from '../config/post.config'
-import { postUtil } from '../utils'
 import ContentSection from './ContentSection'
+import { IPost } from '../config/post.config'
+import InfiniteList from '@m2-modules/infinite-list'
 import PostPreviewCard from './PostPreviewCard'
+import { postUtil } from '../utils'
 
 export interface PostListProps {
   fetchLimit?: number

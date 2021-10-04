@@ -5,6 +5,7 @@ import {
 } from 'next'
 import { NextRouter, useRouter } from 'next/router'
 
+import CommonHead from '../../src/components/CommonHead'
 import { IPost } from '../../src/config/post.config'
 import PostDetail from '../../src/components/PostDetail'
 import React from 'react'
@@ -37,7 +38,15 @@ const PostDetailPage: NextPage = (): JSX.Element => {
     return <h1>No post found</h1>
   } else {
     const post: IPost = postUtil.getPostByTitle(title)
-    return <PostDetail post={post} />
+    return (
+      <>
+        <CommonHead
+          title={post.title}
+          descriptions={[post.category, post.description, ...post.tags]}
+        />
+        <PostDetail post={post} />
+      </>
+    )
   }
 }
 

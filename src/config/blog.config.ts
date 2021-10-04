@@ -2,6 +2,7 @@ import { SocialInfo } from '../components/SocialLinkBar'
 
 export interface IBlogConfig {
   title: string
+  titleDelimiter?: string
   description: string
   githubURL?: string
   email?: string

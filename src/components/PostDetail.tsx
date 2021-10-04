@@ -17,6 +17,7 @@ import styled from 'styled-components'
 
 const TitleContainer = styled.div`
   display: flex;
+  padding: 20px;
 
   & > button {
     margin: auto 0px auto auto;
@@ -31,6 +32,7 @@ const TitleContainer = styled.div`
 `
 
 const ContentContainer = styled.div`
+  padding: 20px;
   overflow: auto;
 `
 
