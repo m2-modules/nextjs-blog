@@ -3,15 +3,12 @@ import { SocialInfo } from '../components/SocialLinkBar'
 export interface IBlogConfig {
   title: string
   titleDelimiter?: string
-  description: string
-  githubURL?: string
   email?: string
   socials?: SocialInfo[]
 }
 
 export const blogConfig: IBlogConfig = {
   title: 'My Blog',
-  description: 'My blog description',
   socials: [
     { type: 'GitHub', url: 'https://github.com/your_account' },
     { type: 'Facebook', url: 'https://your/Facebook/url' },

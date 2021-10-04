@@ -4,7 +4,7 @@ export interface IPost {
   description: string
   category: string
   published: boolean
-  publishedAt: Date
+  publishedAt: string
   thumbnailName?: string
   tags: string[]
 }
@@ -16,7 +16,7 @@ const posts: IPost[] = [
     description: 'Sample post 1 description',
     category: 'category-1',
     published: true,
-    publishedAt: new Date(),
+    publishedAt: '2021-01-01',
     tags: ['Sample', 'Second Sample'],
   },
   {
@@ -25,7 +25,7 @@ const posts: IPost[] = [
     description: 'Sample post 2 description',
     category: 'category-2',
     published: true,
-    publishedAt: new Date(),
+    publishedAt: '2021-01-01',
     tags: ['Sample', 'Second Sample'],
   },
   {
@@ -34,7 +34,7 @@ const posts: IPost[] = [
     description: 'Sample post 3 description',
     category: 'category-3',
     published: true,
-    publishedAt: new Date(),
+    publishedAt: '2021-01-01',
     tags: ['Sample', 'Second Sample'],
   },
   {
@@ -43,7 +43,7 @@ const posts: IPost[] = [
     description: 'Sample post 4 description',
     category: 'category-4',
     published: true,
-    publishedAt: new Date(),
+    publishedAt: '2021-01-01',
     tags: ['Sample', 'Second Sample'],
   },
   {
@@ -52,7 +52,7 @@ const posts: IPost[] = [
     description: 'Sample post 5 description',
     category: 'category-5',
     published: true,
-    publishedAt: new Date(),
+    publishedAt: '2021-01-01',
     tags: ['Sample', 'Second Sample'],
   },
   {
@@ -61,7 +61,7 @@ const posts: IPost[] = [
     description: 'Sample post 6 description',
     category: 'category-6',
     published: true,
-    publishedAt: new Date(),
+    publishedAt: '2021-01-01',
     tags: ['Sample', 'Second Sample'],
   },
   {
@@ -70,7 +70,7 @@ const posts: IPost[] = [
     description: 'Sample post 7 description',
     category: 'category-7',
     published: true,
-    publishedAt: new Date(),
+    publishedAt: '2021-01-01',
     tags: ['Sample', 'Second Sample'],
   },
   {
@@ -79,7 +79,7 @@ const posts: IPost[] = [
     description: 'Sample post 8 description',
     category: 'category-8',
     published: true,
-    publishedAt: new Date(),
+    publishedAt: '2021-01-01',
     tags: ['Sample', 'Second Sample'],
   },
   {
@@ -88,7 +88,7 @@ const posts: IPost[] = [
     description: 'Sample post 9 description',
     category: 'category-9',
     published: true,
-    publishedAt: new Date(),
+    publishedAt: '2021-01-01',
     tags: ['Sample', 'Second Sample'],
   },
   {
@@ -97,7 +97,7 @@ const posts: IPost[] = [
     description: 'Sample post 10 description',
     category: 'category-10',
     published: true,
-    publishedAt: new Date(),
+    publishedAt: '2021-01-01',
     tags: ['Sample', 'Second Sample'],
   },
 ]

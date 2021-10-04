@@ -90,7 +90,7 @@ const PostPreviewCard = (props: PostPreviewCardProps): JSX.Element => {
     <Link href={`/posts/${postUtil.dashedTitle(post)}`} passHref>
       <StyledArticle hasThumbnail={Boolean(post.thumbnailName)}>
         <h2 id="title">{post.title}</h2>
-        <p id="date">{post.publishedAt.toLocaleDateString()}</p>
+        <p id="date">{new Date(post.publishedAt).toLocaleDateString()}</p>
         <TagSpreader tags={post.tags} />
         {post.thumbnailName ? (
           <Image

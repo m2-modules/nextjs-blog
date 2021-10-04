@@ -1,34 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Static website based on [NextJS](https://nextjs.org)
 
-## Getting Started
+## To deploy through your github page.
 
-First, run the development server:
+1. `Fork` this repository to your own repository.
+1. Change name of forked repository to your github page repository name
+1. Allow to use predefined `Github Action`
+   - You can activate predefined github action at `Action` menu.
+1. After you activate `Github Action` you can deploy your changes by only pushing your changes on your repository.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## To write your own content
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Create new `markdown` file in `/public/resources/[CATEGORY]/[ANY-FILE-NAME].md`
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+   - `CATEGORY` will be used to sort your post.
+   - `ANY-FILE_NAME` is element of consisting URL path.
+   - During building time `file name` will be changed into URL friendly pattern. Therefore it is recommended to use `English` only
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+2. Add configuration for newly created content
+   - Open up `post.config.ts` file from `/src/config`
+   - There might be bunch of sample posting.\
+   - You can add your newly created content by adding new element which has same structure compared with sample posting config.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Detail of configurations
 
-## Learn More
+### Blog config
 
-To learn more about Next.js, take a look at the following resources:
+| Prop           | Description                                                                                                                                                        | Required | Example                                    |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ------------------------------------------ |
+| title          | Your website title. It will be use to show title and header                                                                                                        | true     | 'My Blog'                                  |
+| titleDelimiter | When you move into specific page the title will change something like 'My Blog \| Posts' and ' \| ' is delimiter. You can change it whatever you want it if string | false    | '\*'                                       |
+| email          | Your email address. It will be used to consist `Contact me` page. Not supported at                                                                                 | false    | my_email@email.com                         |
+| socials        | Your social network URLs that you want to open up to visitors                                                                                                      | false    | Refer predefined example in blog.config.ts |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Menu config
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+You can add your own menu to edit this configuration
+|Prop|Description|Required|Example|
+|-|-|-|-|
+|path|pathname to access page|true|'/news'|
+|title|Tile of page|true|'News|
+|description|Description of the page.| true | 'Interested news about traveling'|
 
-## Deploy on Vercel
+### Post config
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| Prop          | Description                                                                     | Required | Example                          |
+| ------------- | ------------------------------------------------------------------------------- | -------- | -------------------------------- |
+| title         | Title of your posting                                                           | true     | My new Posting!                  |
+| fileName      | File name that system can refer to find post                                    | true     | 'my-new-posting.md'              |
+| description   | Description for your posting                                                    | true     | 'Travel, Traveling, Hobby'       |
+| category      | Category that post is allocated                                                 | true     | 'category-1'                     |
+| published     | Whether you want to open it to your visitors or not                             | true     | true \| false                    |
+| publishedAt   | The date that you published your posting. It will be used to sort your postings | true     | '2021-10-04'                     |
+| thumbnailName | File name that system can refer to find thumbnail image for the posting         | false    | 'thumbnail.jpeg'                 |
+| tags          | Tags can describe what current posting about. It will be used for SEO           | true     | ['Travel', 'Traveling', 'Hobby'] |
