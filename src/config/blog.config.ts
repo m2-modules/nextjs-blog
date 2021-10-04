@@ -3,6 +3,7 @@ import { SocialInfo } from '../components/SocialLinkBar'
 export interface IBlogConfig {
   title: string
   titleDelimiter?: string
+  lang?: string
   email?: string
   socials?: SocialInfo[]
 }

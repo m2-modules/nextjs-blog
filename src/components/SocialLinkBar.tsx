@@ -33,21 +33,21 @@ type SocialLinkBarProps = {
 function renderSocialIcon(type: SupportingSocials): JSX.Element {
   switch (type) {
     case 'Facebook':
-      return <Facebook />
+      return <Facebook name={'facebook-link-icon'} />
     case 'Instagram':
-      return <Instagram />
+      return <Instagram name={'instagram-link-icon'} />
     case 'LinkedIn':
-      return <LinkedIn />
+      return <LinkedIn name="linkedin-link-icon" />
     case 'Pinterest':
-      return <Pinterest />
+      return <Pinterest name="pinterest-link-icon" />
     case 'Reddit':
-      return <Reddit />
+      return <Reddit name="reddit-link-icon" />
     case 'Twitter':
-      return <Twitter />
+      return <Twitter name="reddit-link-icon" />
     case 'YouTube':
-      return <YouTube />
+      return <YouTube name="youtube-link-icon" />
     case 'GitHub':
-      return <GitHub />
+      return <GitHub name="github-link-icon" />
     default:
       return <></>
   }

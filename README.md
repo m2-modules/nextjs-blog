@@ -33,6 +33,7 @@
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | ------------------------------------------ |
 | title          | Your website title. It will be use to show title and header                                                                                                        | true     | 'My Blog'                                  |
 | titleDelimiter | When you move into specific page the title will change something like 'My Blog \| Posts' and ' \| ' is delimiter. You can change it whatever you want it if string | false    | '\*'                                       |
+| lang           | Document language configuration                                                                                                                                    | false    | 'ko'                                       |
 | email          | Your email address. It will be used to consist `Contact me` page. Not supported at                                                                                 | false    | my_email@email.com                         |
 | socials        | Your social network URLs that you want to open up to visitors                                                                                                      | false    | Refer predefined example in blog.config.ts |
 
