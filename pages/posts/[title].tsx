@@ -1,16 +1,16 @@
+import React from 'react'
+
 import {
-  GetStaticPathsContext,
   GetStaticPathsResult,
   GetStaticPropsContext,
   GetStaticPropsResult,
   NextPage,
 } from 'next'
 import { NextRouter, useRouter } from 'next/router'
-import posts, { IPost } from '../../src/config/post.config'
 
 import CommonHead from '../../src/components/CommonHead'
 import PostDetail from '../../src/components/PostDetail'
-import React from 'react'
+import posts, { IPost } from '../../src/config/post.config'
 import { postUtil } from '../../src/utils'
 
 export type PostDetailPageProps = {
@@ -47,7 +47,8 @@ const PostDetailPage: NextPage = (): JSX.Element => {
       <>
         <CommonHead
           title={post.title}
-          descriptions={[post.category, post.description, ...post.tags]}
+          description={post.description}
+          keywords={[post.category, ...post.tags]}
         />
         <PostDetail post={post} />
       </>
