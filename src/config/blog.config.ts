@@ -6,6 +6,7 @@ export interface IBlogConfig {
   lang?: string
   email?: string
   socials?: SocialInfo[]
+  author?: string
 }
 
 export const blogConfig: IBlogConfig = {

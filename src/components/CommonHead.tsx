@@ -1,12 +1,16 @@
-import { NextRouter, useRouter } from 'next/router'
-import menuConfigs, { IMenuConfig } from '../config/menu.config'
+import React from 'react'
 
 import Head from 'next/head'
+import { NextRouter, useRouter } from 'next/router'
+
 import { blogConfig } from '../config/blog.config'
+import menuConfigs, { IMenuConfig } from '../config/menu.config'
+import HeadMeta from './HeadMeta'
 
 export type CommonHeadProps = {
   title?: string
-  descriptions?: string[]
+  description?: string
+  keywords?: string[]
 }
 
 const CommonHead = (props: CommonHeadProps): JSX.Element => {
@@ -22,24 +26,19 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
       ? [blogConfig.title, menuConfig.title]
       : [blogConfig.title]
   ).join(` ${blogConfig.titleDelimiter || '|'} `)
-
-  const descriptions: string[] = []
-  if (menuConfig?.description) descriptions.push(menuConfig.description)
-  if (props.descriptions?.length) descriptions.push(...props.descriptions)
+  const description: string | undefined = menuConfig?.description
+  const keywords: string[] | undefined = props.keywords
+  const author: string | undefined = blogConfig.author || blogConfig.email
 
   return (
     <Head>
+      <HeadMeta
+        title={title}
+        description={description}
+        keywords={keywords}
+        author={author}
+      />
       <title>{title}</title>
-
-      <meta property="og:title" content={title} />
-
-      {descriptions?.length ? (
-        <meta property="og:description" content={descriptions.join(',')} />
-      ) : (
-        ''
-      )}
-
-      <link rel="favicon" href="favicon.ico" type="image/x-icon" />
     </Head>
   )
 }
