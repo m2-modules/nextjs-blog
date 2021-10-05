@@ -13,7 +13,7 @@ export const blogConfig: IBlogConfig = {
   title: 'My Blog',
   author: 'Author',
   socials: [
-    { type: 'GitHub', url: 'https://github.com/possible819' },
+    { type: 'GitHub', url: 'https://github.com/your_git_url' },
     // { type: 'Facebook', url: 'https://your/Facebook/url' },
     // { type: 'Instagram', url: 'https://your/Instagram/url' },
     // { type: 'LinkedIn', url: 'https://your/LinkedIn/url' },
