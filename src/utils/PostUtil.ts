@@ -28,6 +28,14 @@ export class PostUtil {
     }
   }
 
+  getPostAll(includeNonPublished = false): IPost[] {
+    if (includeNonPublished) {
+      return this.posts.slice(0)
+    } else {
+      return this.publishedPosts.slice(0)
+    }
+  }
+
   getPostByTitle(title: string): IPost {
     const found: IPost | undefined = this.posts.find(
       (post: IPost) => post.title === title || this.dashedTitle(post) === title
@@ -67,5 +75,11 @@ export class PostUtil {
 
   dashedTitle(post: IPost): string {
     return post.title.replace(/ /g, '-').toLowerCase()
+  }
+
+  getMeta(post: IPost): string {
+    return `${post.title}${post.description}${post.tags.join()}`
+      .replace(/ /g, '')
+      .toLowerCase()
   }
 }
