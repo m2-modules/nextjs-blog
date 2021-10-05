@@ -1,3 +1,5 @@
+import styled from 'styled-components'
+
 import {
   Facebook,
   GitHub,
@@ -8,8 +10,6 @@ import {
   Twitter,
   YouTube,
 } from '@material-ui/icons'
-
-import styled from 'styled-components'
 
 type SupportingSocials =
   | 'Facebook'
@@ -55,6 +55,7 @@ function renderSocialIcon(type: SupportingSocials): JSX.Element {
 
 const AnchorContainer = styled.div`
   display: flex;
+  padding: 10px;
   gap: 10px;
 `
 const StyledAnchor = styled.a`
