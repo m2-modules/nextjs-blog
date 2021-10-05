@@ -60,3 +60,11 @@ You can add your own menu to edit this configuration
 | publishedAt   | The date that you published your posting. It will be used to sort your postings | true     | '2021-10-04'                     |
 | thumbnailName | File name that system can refer to find thumbnail image for the posting         | false    | 'thumbnail.jpeg'                 |
 | tags          | Tags can describe what current posting about. It will be used for SEO           | true     | ['Travel', 'Traveling', 'Hobby'] |
+
+### Google analytics config
+
+You can use google analytics report and APIs by setting up below configuration.
+
+| Prop | Description                  | Required | Example               |
+| ---- | ---------------------------- | -------- | --------------------- |
+| id   | Google Analytics tracking ID | false    | 'YOUR-GA-TRACKING-ID' |

@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { NextRouter, useRouter } from 'next/router'
 
 import { blogConfig, IBlogConfig } from '../config/blog.config'
+import { gaConfig } from '../config/ga.config'
 import menuConfigs, { IMenuConfig } from '../config/menu.config'
 
 export type CommonHeadProps = {
@@ -25,8 +26,32 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
   const keywords: string[] | undefined = props.keywords
   const author: string | undefined = blogConfig.author || blogConfig.email
 
+  const gaID: string | undefined = gaConfig.id
+
   return (
     <Head>
+      {gaID ? (
+        // <!-- Global site tag (gtag.js) - Google Analytics -->
+        <>
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaID}`}
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+              
+                gtag('config', '${gaID}');
+              `,
+            }}
+          ></script>
+        </>
+      ) : (
+        ''
+      )}
       <title>{title}</title>
 
       <meta property="og:title" content={title} />
