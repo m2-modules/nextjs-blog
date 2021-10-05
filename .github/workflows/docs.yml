@@ -19,4 +19,7 @@ jobs:
         run: yarn docs
 
       - name: Add & commit
-        uses: EndBug/add-and-commit@v7.3.0
+        uses: github-actions-x/commit@v2.8
+        with: 
+          force-add: true
+          files: ./docs
