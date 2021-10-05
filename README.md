@@ -35,16 +35,18 @@
 | titleDelimiter | When you move into specific page the title will change something like 'My Blog \| Posts' and ' \| ' is delimiter. You can change it whatever you want it if string | false    | '\*'                                       |
 | lang           | Document language configuration                                                                                                                                    | false    | 'ko'                                       |
 | email          | Your email address. It will be used to consist `Contact me` page. Not supported at                                                                                 | false    | my_email@email.com                         |
+| author         | Your name that will be used to build up meta tag in head for SEO                                                                                                   | false    | 'Author'                                   |
 | socials        | Your social network URLs that you want to open up to visitors                                                                                                      | false    | Refer predefined example in blog.config.ts |
 
 ### Menu config
 
 You can add your own menu to edit this configuration
-|Prop|Description|Required|Example|
-|-|-|-|-|
-|path|pathname to access page|true|'/news'|
-|title|Tile of page|true|'News|
-|description|Description of the page.| true | 'Interested news about traveling'|
+
+| Prop        | Description              | Required | Example                           |
+| ----------- | ------------------------ | -------- | --------------------------------- |
+| path        | pathname to access page  | true     | '/news'                           |
+| title       | Tile of page             | true     | 'News                             |
+| description | Description of the page. | true     | 'Interested news about traveling' |
 
 ### Post config
 

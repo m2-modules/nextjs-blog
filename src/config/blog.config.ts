@@ -4,9 +4,9 @@ export interface IBlogConfig {
   title: string
   titleDelimiter?: string
   lang?: string
+  author?: string
   email?: string
   socials?: SocialInfo[]
-  author?: string
 }
 
 export const blogConfig: IBlogConfig = {
