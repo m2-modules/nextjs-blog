@@ -10,7 +10,7 @@ export interface IBlogConfig {
 }
 
 export const blogConfig: IBlogConfig = {
-  title: 'Code Logs',
+  title: 'My Blog',
   author: 'Author',
   socials: [
     { type: 'GitHub', url: 'https://github.com/possible819' },
