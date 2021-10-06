@@ -34,7 +34,6 @@
 }
 #__next > footer {
   grid-area: footer;
-  min-height: 40px;
   display: grid;
 }
 
