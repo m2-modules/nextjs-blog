@@ -3,5 +3,5 @@ export interface IGAConfig {
 }
 
 export const gaConfig: IGAConfig = {
-  // id: 'YOUR-GA-ID'
+  id: 'G-1V105VZWBB',
 }

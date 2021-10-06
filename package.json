@@ -1,7 +1,8 @@
 {
-  "name": "nextjs-blog",
+  "name": "code-logs.github.io",
   "version": "0.1.0",
   "private": true,
+  "siteURL": "https://code-logs.github.io",
   "scripts": {
     "dev": "next dev",
     "build": "npm run lint && npm run test && next build",

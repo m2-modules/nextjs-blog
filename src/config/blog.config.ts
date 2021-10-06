@@ -10,10 +10,10 @@ export interface IBlogConfig {
 }
 
 export const blogConfig: IBlogConfig = {
-  title: 'My Blog',
-  author: 'Author',
+  title: 'Code Logs',
+  author: 'Jay Lee',
   socials: [
-    { type: 'GitHub', url: 'https://github.com/your_git_url' },
+    { type: 'GitHub', url: 'https://github.com/possible819' },
     // { type: 'Facebook', url: 'https://your/Facebook/url' },
     // { type: 'Instagram', url: 'https://your/Instagram/url' },
     // { type: 'LinkedIn', url: 'https://your/LinkedIn/url' },
