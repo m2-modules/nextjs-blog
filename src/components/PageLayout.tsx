@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 
 import BlogTitle from './BlogTitle'
 import ContentIndexer from './ContentIndexer/ContentIndexer'
+import CopyRight from './CopyRight'
 import { IPost } from '../config/post.config'
 import NavBar from './NavBar'
 import { PostDetailPageProps } from '../../pages/posts/[title]'
 import SocialLinkBar from './SocialLinkBar'
 import { blogConfig } from '../config/blog.config'
+import { layoutConfig } from '../config/layout.config'
 import menuConfigs from '../config/menu.config'
 import { postUtil } from '../utils'
 
@@ -47,7 +49,16 @@ const PageLayout = (props: PageLayoutProps): JSX.Element => {
 
       <aside>{content ? <ContentIndexer content={content} /> : ''}</aside>
 
-      <footer></footer>
+      <footer>
+        {layoutConfig.footer?.copyright ? (
+          <CopyRight
+            message={layoutConfig.footer.copyright.message}
+            align={layoutConfig.footer.copyright.align}
+          />
+        ) : (
+          ''
+        )}
+      </footer>
     </>
   )
 }
