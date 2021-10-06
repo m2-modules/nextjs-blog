@@ -1,42 +1,35 @@
-import React, {
-  RefObject,
-  createRef,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import ContentIndexer from '../components/ContentIndexer/ContentIndexer'
 import ContentSection from '../components/ContentSection'
 import DrawPanel from '@m2-modules/draw-panel'
 import { FormatListNumbered } from '@material-ui/icons'
 import { IPost } from '../config/post.config'
+import markdownStyles from '../assets/styles/markdown.module.css'
 import { postUtil } from '../utils'
 import styled from 'styled-components'
 
-const TitleContainer = styled.div`
-  display: flex;
-  padding: 20px;
+const StyledButton = styled.button`
+  margin: auto 0px auto auto;
+  visibility: hidden;
 
-  & > button {
-    margin: auto 0px auto auto;
-    visibility: hidden;
-  }
-
-  @media only screen and (max-width: 600px) {
-    & > button {
-      visibility: visible;
-    }
+  @media only screen and (max-width: 800px) {
+    visibility: visible;
   }
 `
 
 const ContentContainer = styled.div`
   padding: 20px;
-  overflow: auto;
 `
 
 const StyledImg = styled.img`
-  max-width: 100vw;
+  width: -webkit-fill-available;
+  height: 300px;
+  object-fit: cover;
+
+  @media only screen and (max-width: 800px) {
+    height: 200px;
+  }
 `
 
 export type PostDetailProps = {
@@ -48,9 +41,6 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
   const [asideOpen, setAsideOpen] = useState<boolean>(false)
   const [content, setContent] = useState<string | null>(null)
 
-  const contentContainerRef: RefObject<HTMLDivElement> =
-    createRef<HTMLDivElement>()
-
   const toggleAsidePanel = useCallback(() => {
     setAsideOpen(!asideOpen)
   }, [asideOpen])
@@ -60,40 +50,20 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
   }, [])
 
   useEffect(() => {
-    async function refreshPostContent(): Promise<void> {
-      const contentSection: HTMLElement | null = contentContainerRef.current
-      if (!contentSection || !post) return
-
-      const content: string = await postUtil.getContent(post)
-      setContent(content)
-      contentSection.innerHTML += content
-    }
-
-    refreshPostContent()
-  }, [contentContainerRef, post])
+    postUtil.getContent(post).then(setContent)
+  }, [post])
 
   return post ? (
-    <ContentSection>
-      <TitleContainer>
-        <h1>{post.title}</h1>
-        <button className="transparent" onClick={toggleAsidePanel}>
-          <FormatListNumbered />
-        </button>
-      </TitleContainer>
+    <>
+      <StyledButton
+        style={{ marginLeft: 'auto' }}
+        className="transparent"
+        onClick={toggleAsidePanel}
+      >
+        <FormatListNumbered />
+      </StyledButton>
 
-      {content ? (
-        <DrawPanel
-          position="right"
-          open={asideOpen}
-          closeHandler={closeAsidePanel}
-        >
-          <ContentIndexer content={content} />
-        </DrawPanel>
-      ) : (
-        ''
-      )}
-
-      <ContentContainer ref={contentContainerRef}>
+      <ContentSection>
         {post.thumbnailName ? (
           <StyledImg
             src={postUtil.getThumbnailSrc(post)}
@@ -102,8 +72,27 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
         ) : (
           ''
         )}
-      </ContentContainer>
-    </ContentSection>
+
+        {content ? (
+          <DrawPanel
+            position="right"
+            open={asideOpen}
+            closeHandler={closeAsidePanel}
+          >
+            <ContentIndexer content={content} />
+          </DrawPanel>
+        ) : (
+          ''
+        )}
+
+        <ContentContainer
+          className={markdownStyles.markdown}
+          dangerouslySetInnerHTML={{
+            __html: content || '',
+          }}
+        />
+      </ContentSection>
+    </>
   ) : (
     <></>
   )

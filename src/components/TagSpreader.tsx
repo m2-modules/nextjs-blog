@@ -1,5 +1,4 @@
 import React from 'react'
-
 import styled from 'styled-components'
 
 export interface TagSpreaderProps {
@@ -10,12 +9,16 @@ const StyledTagSpreaderList = styled.ul`
   display: inline-flex;
   gap: 10px;
   list-style: none;
+  margin: 0px;
+  overflow: auto;
   & > li {
     border-radius: 10px;
     background-color: #333;
     color: white;
     padding: 7px;
     font-size: 9pt;
+    margin: auto 0px;
+    white-space: nowrap;
   }
   & > li:before {
     content: '#';
