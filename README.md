@@ -14,16 +14,23 @@
 
 ## To write your own posting
 
+1. `main` branch which is used to being published is restricted to commit directly. Therefore you should write your posting in another branch (You can use`draft` branch) and merge your changes via Pull Request.
+   > main branch has `docs` directory to store built resources. To avoid conflict sources under this directory `docs` is a member of gitignore. Except `main` branch all the other branches won't have `docs`.
 1. Create new `markdown` file in `/public/resources/[CATEGORY]/[ANY-FILE-NAME].md`
 
    - `CATEGORY` will be used to sort your post.
    - `ANY-FILE_NAME` is element of consisting URL path.
    - During building time `file name` will be changed into URL friendly pattern. Therefore it is recommended to use `English` only
 
-2. Add configuration for newly created posting
+1. Add configuration for newly created posting
    - Open up `post.config.ts` file from `/src/config`
    - There might be bunch of sample posting.\
    - You can add your newly created posting by adding new element which has same structure compared with sample posting config.
+
+## Renew from [@m2-modules/nextjs-blog](https://github.com/m2-modules/nextjs-blog)
+
+- As being upgraded this repository, You may want to renew your own blog from original branch.
+  For doing this you need to merge `draft` branch of `nextjs-blog` to yours.
 
 ## Detail of configurations
 
