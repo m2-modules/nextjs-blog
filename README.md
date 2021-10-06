@@ -14,8 +14,8 @@
 
 ## To write your own posting
 
-1. `main` branch which is used to being published is restricted to commit directly. Therefore you should write your posting in another branch (You can use`draft` branch) and merge your changes via Pull Request.
-   > main branch has `docs` directory to store built resources. To avoid conflict sources under this directory `docs` is a member of gitignore. Except `main` branch all the other branches won't have `docs`.
+1. Main branch has `docs` directory to store built resources. To avoid conflict sources under this directory `docs` is a member of gitignore. Except `main` branch all the other branches won't have `docs`. Therefore you need to write your posting under another branch (you can use `draft`) and them merge your changes into `main` via PR.
+
 1. Create new `markdown` file in `/public/resources/[CATEGORY]/[ANY-FILE-NAME].md`
 
    - `CATEGORY` will be used to sort your post.
