@@ -68,3 +68,20 @@ You can use google analytics report and APIs by setting up below configuration.
 | Prop | Description                  | Required | Example               |
 | ---- | ---------------------------- | -------- | --------------------- |
 | id   | Google Analytics tracking ID | false    | 'YOUR-GA-TRACKING-ID' |
+
+## SEO
+
+### Sitemap.xml
+
+To generate sitemap.xml you should config your publishing site URL in `package.json`
+
+```json
+// package.json
+{
+   ...
+   "siteURL": "https://example.com",
+   ...
+}
+```
+
+Github action will generate `sitemap.xml` file right before publish it.
