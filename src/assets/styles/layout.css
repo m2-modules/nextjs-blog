@@ -34,6 +34,8 @@
 }
 #__next > footer {
   grid-area: footer;
+  min-height: 40px;
+  display: grid;
 }
 
 @media only screen and (max-width: 800px) {
