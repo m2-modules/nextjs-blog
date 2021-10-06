@@ -20,16 +20,18 @@ const StyledArticle = styled.article<IStyledArticle>`
   display: grid;
   grid-gap: 10px;
   grid-template-columns: auto 1fr auto auto;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
   grid-template-areas: ${(props) =>
     props.hasThumbnail
       ? `
-      'title title date tags'
+      'thumbnail title title date'
       'thumbnail description description description'
+      'thumbnail tags tags tags'
     `
       : `
-      'title title date tags'
+      'title title title date'
       'description description description description'
+      'tags tags tags tags'
     `};
 
   & > #title {
@@ -57,11 +59,10 @@ const StyledArticle = styled.article<IStyledArticle>`
       grid-template-areas: ${(props) =>
         props.hasThumbnail
           ? `
-        'title title'
-        'date date'
-        'tags tags'
         'thumbnail thumbnail'
+        'title date'
         'description description'
+        'tags tags'
       `
           : `
         'title title'
@@ -79,12 +80,14 @@ const StyledArticle = styled.article<IStyledArticle>`
 `
 
 const StyledImg = styled.img`
-  max-width: 20vw;
+  width: -webkit-fill-available;
   margin: auto;
+  border-radius: 10px;
+  max-width: 20vw;
 
   @media only screen and (max-width: 800px) {
     & {
-      max-width: 70vw;
+      max-width: none;
     }
   }
 `
@@ -111,7 +114,9 @@ const PostPreviewCard = (props: PostPreviewCardProps): JSX.Element => {
         ) : (
           ''
         )}
-        <p id="description">{post.description}</p>
+        <p style={{ margin: 0 }} id="description">
+          {post.description}
+        </p>
       </StyledArticle>
     </Link>
   )

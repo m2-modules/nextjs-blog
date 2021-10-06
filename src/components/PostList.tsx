@@ -1,17 +1,43 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import React, {
+  ChangeEvent,
+  MouseEvent,
+  RefObject,
+  TransitionEvent,
+  createRef,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 
 import ContentSection from './ContentSection'
 import { IPost } from '../config/post.config'
 import PostPreviewCard from './PostPreviewCard'
+import { Search } from '@material-ui/icons'
 import { postUtil } from '../utils'
 import styled from 'styled-components'
 
-const StyledInput = styled.input`
-  margin: 10px 20px;
-  padding: 10px;
-  border: 1px solid #333;
-  border-radius: 7px;
-  outline: none;
+const StyledLabel = styled.label`
+  display: inline-flex;
+  max-width: 200px;
+  border-bottom: 1px solid #aaa;
+  margin: 0px 20px;
+  grid-gap: 10px;
+  transition: all 0.5s ease-in-out;
+
+  & > * {
+    margin: auto 0px;
+  }
+
+  & > input {
+    flex: 1;
+    padding: 10px 0px;
+    border: none;
+    outline: none;
+  }
+
+  @media only screen and (max-width: 800px) {
+    max-width: none;
+  }
 `
 
 export interface PostListProps {
@@ -19,9 +45,13 @@ export interface PostListProps {
 }
 
 const PostList = (props: PostListProps): JSX.Element => {
+  const searchInputRef: RefObject<HTMLInputElement> =
+    createRef<HTMLInputElement>()
+
+  const [searchInputActive, setSearchInputActive] = useState<boolean>(false)
   const [posts, setPosts] = useState<IPost[]>([])
 
-  const onChangeHandler = useCallback(
+  const onSearchInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const condition: string = event.currentTarget.value.toLowerCase()
       const postList: IPost[] = postUtil.getPostAll()
@@ -44,11 +74,16 @@ const PostList = (props: PostListProps): JSX.Element => {
 
   return (
     <>
-      <StyledInput
-        type="search"
-        placeholder="Search..."
-        onChange={onChangeHandler}
-      />
+      <StyledLabel>
+        <Search />
+
+        <input
+          ref={searchInputRef}
+          type="search"
+          placeholder="Search..."
+          onChange={onSearchInputChange}
+        />
+      </StyledLabel>
       <ContentSection>
         {posts.map((post: IPost) => (
           <PostPreviewCard key={post.title} post={post} />

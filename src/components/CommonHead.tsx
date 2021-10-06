@@ -1,14 +1,14 @@
-import React from 'react'
+import { IBlogConfig, blogConfig } from '../config/blog.config'
+import { NextRouter, useRouter } from 'next/router'
+import menuConfigs, { IMenuConfig } from '../config/menu.config'
 
 import Head from 'next/head'
-import { NextRouter, useRouter } from 'next/router'
-
-import { blogConfig, IBlogConfig } from '../config/blog.config'
+import React from 'react'
 import { gaConfig } from '../config/ga.config'
-import menuConfigs, { IMenuConfig } from '../config/menu.config'
 
 export type CommonHeadProps = {
   title?: string
+  imageURL?: string
   description?: string
   keywords?: string[]
 }
@@ -20,6 +20,7 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
   )
 
   const title: string = computeTitle(props, blogConfig, menuConfig)
+  const imageURL: string | undefined = props.imageURL
 
   const description: string | undefined =
     props.description || menuConfig?.description
@@ -55,6 +56,7 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
       <title>{title}</title>
 
       <meta property="og:title" content={title} />
+      {imageURL ? <meta property="og:image" content={imageURL} /> : ''}
       {description ? (
         <>
           <meta property="og:description" content={description} />
@@ -82,9 +84,9 @@ function computeTitle(
 ): string {
   return (
     props.title
-      ? [blogConfig.title, props.title]
+      ? [props.title, blogConfig.title]
       : menuConfig?.title
-      ? [blogConfig.title, menuConfig.title]
+      ? [menuConfig.title, blogConfig.title]
       : [blogConfig.title]
   ).join(` ${blogConfig.titleDelimiter || '|'} `)
 }
