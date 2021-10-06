@@ -78,9 +78,7 @@ To generate sitemap.xml you should config your publishing site URL in `package.j
 ```json
 // package.json
 {
-   ...
-   "siteURL": "https://example.com",
-   ...
+  "siteURL": "https://example.com"
 }
 ```
 
