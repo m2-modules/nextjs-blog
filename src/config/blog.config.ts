@@ -11,11 +11,11 @@ export interface IBlogConfig {
 }
 
 export const blogConfig: IBlogConfig = {
-  title: 'My Blog',
-  author: 'Author',
-  siteURL: 'https://www.example.com',
+  title: 'Code Logs',
+  author: 'Jay Lee',
+  siteURL: 'https://code-logs.github.io',
   socials: [
-    { type: 'GitHub', url: 'https://github.com/your_git_url' },
+    { type: 'GitHub', url: 'https://github.com/possible819' },
     // { type: 'Facebook', url: 'https://your/Facebook/url' },
     // { type: 'Instagram', url: 'https://your/Instagram/url' },
     // { type: 'LinkedIn', url: 'https://your/LinkedIn/url' },

@@ -11,31 +11,14 @@ export interface IPost {
 
 const posts: IPost[] = [
   {
-    title: 'Sample Post 1',
-    fileName: 'sample-1.md',
-    description: 'Sample post 1 description',
-    category: 'category-1',
+    title: '검색엔진 최적화',
+    fileName: 'meta-tag.md',
+    description: '검색엔진 최적화를 위한 Meta Tag 설정',
+    category: 'SEO',
     published: true,
-    publishedAt: '2021-01-01',
-    tags: ['Sample', 'Second Sample'],
-  },
-  {
-    title: 'Sample Post 2',
-    fileName: 'sample-2.md',
-    description: 'Sample post 2 description',
-    category: 'category-2',
-    published: true,
-    publishedAt: '2021-01-01',
-    tags: ['Sample', 'Second Sample'],
-  },
-  {
-    title: 'Sample Post 3',
-    fileName: 'sample-3.md',
-    description: 'Sample post 3 description',
-    category: 'category-3',
-    published: true,
-    publishedAt: '2021-01-01',
-    tags: ['Sample', 'Second Sample'],
+    publishedAt: '2021-10-05',
+    tags: ['SEO', 'Search Engine Optimization', '검색엔진 최적화', 'meta tag'],
+    thumbnailName: 'seo-thumbnail.jpg',
   },
 ]
 
