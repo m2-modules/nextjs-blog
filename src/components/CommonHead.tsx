@@ -1,10 +1,11 @@
-import { IBlogConfig, blogConfig } from '../config/blog.config'
-import { NextRouter, useRouter } from 'next/router'
-import menuConfigs, { IMenuConfig } from '../config/menu.config'
+import React from 'react'
 
 import Head from 'next/head'
-import React from 'react'
+import { NextRouter, useRouter } from 'next/router'
+
+import { blogConfig, IBlogConfig } from '../config/blog.config'
 import { gaConfig } from '../config/ga.config'
+import menuConfigs, { IMenuConfig } from '../config/menu.config'
 
 export type CommonHeadProps = {
   title?: string
@@ -20,6 +21,7 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
   )
 
   const title: string = computeTitle(props, blogConfig, menuConfig)
+  const siteURL: string = blogConfig.siteURL
   const imageURL: string | undefined = props.imageURL
 
   const description: string | undefined =
@@ -55,7 +57,10 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
       )}
       <title>{title}</title>
 
+      <link rel="canonical" href={siteURL} />
+
       <meta property="og:title" content={title} />
+
       {imageURL ? <meta property="og:image" content={imageURL} /> : ''}
       {description ? (
         <>
