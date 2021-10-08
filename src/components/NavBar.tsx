@@ -1,6 +1,8 @@
-import { IMenuConfig } from '../config/menu.config'
 import Link from 'next/link'
 import styled from 'styled-components'
+
+import { IMenuConfig } from '../config/menu.config'
+import { pathUtil } from '../utils'
 
 export interface NavBarProps {
   menus: IMenuConfig[]
@@ -25,7 +27,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
     <NavBarStyledUL>
       {props.menus.map((menu: IMenuConfig, idx: number) => (
         <li key={`menu-${idx}`}>
-          <Link href={menu.path}>{menu.title}</Link>
+          <Link href={pathUtil.absolutePath(menu.path)}>{menu.title}</Link>
         </li>
       ))}
     </NavBarStyledUL>
