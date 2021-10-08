@@ -13,7 +13,7 @@ export interface IBlogConfig {
 export const blogConfig: IBlogConfig = {
   title: 'My Blog',
   author: 'Author',
-  siteURL: 'https://www.example.com',
+  siteURL: 'http://localhost:3000',
   socials: [
     { type: 'GitHub', url: 'https://github.com/your_git_url' },
     // { type: 'Facebook', url: 'https://your/Facebook/url' },
