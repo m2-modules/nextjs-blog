@@ -59,6 +59,16 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
 
       {/* PWA manifest */}
       <link rel="manifest" href="/manifest.json" />
+      {/* PWA Service worker */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+          }
+        `,
+        }}
+      ></script>
 
       <link rel="canonical" href={siteURL} />
 
