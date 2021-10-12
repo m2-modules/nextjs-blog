@@ -1,11 +1,9 @@
-import React from 'react'
-
-import Link from 'next/link'
-import styled from 'styled-components'
+import { pathUtil, postUtil } from '../utils'
 
 import { IPost } from '../config/post.config'
-import { pathUtil, postUtil } from '../utils'
+import React from 'react'
 import TagSpreader from './TagSpreader'
+import styled from 'styled-components'
 
 interface IStyledArticle {
   hasThumbnail: boolean
@@ -102,10 +100,7 @@ const PostPreviewCard = (props: PostPreviewCardProps): JSX.Element => {
   const post: IPost = props.post
 
   return (
-    <Link
-      href={pathUtil.absolutePath(`/posts/${postUtil.dashedTitle(post)}`)}
-      passHref
-    >
+    <a href={pathUtil.absolutePath(`/posts/${postUtil.dashedTitle(post)}`)}>
       <StyledArticle hasThumbnail={Boolean(post.thumbnailName)}>
         <h2 id="title">{post.title}</h2>
         <p id="date">{new Date(post.publishedAt).toLocaleDateString()}</p>
@@ -123,7 +118,7 @@ const PostPreviewCard = (props: PostPreviewCardProps): JSX.Element => {
           {post.description}
         </p>
       </StyledArticle>
-    </Link>
+    </a>
   )
 }
 
