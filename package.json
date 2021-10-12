@@ -9,7 +9,8 @@
     "export": "npm run build && next export",
     "docs": "npm run build && next export -o ./docs && touch ./docs/.nojekyll && next-sitemap",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "pwa:init": "node ./pwa-init"
   },
   "jest": {
     "transform": {

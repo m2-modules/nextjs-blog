@@ -57,6 +57,9 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
       )}
       <title>{title}</title>
 
+      {/* PWA manifest */}
+      <link rel="manifest" href="manifest.json" />
+
       <link rel="canonical" href={siteURL} />
 
       <meta property="og:title" content={title} />

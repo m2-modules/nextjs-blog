@@ -90,3 +90,14 @@ To generate sitemap.xml you should config your publishing site URL in `package.j
 ```
 
 Github action will generate `sitemap.xml` file right before publish it.
+
+## PWA
+
+To activate PWA you need to run below script to initialize `manifest.json`
+
+```sh
+$ yarn pwa:init
+```
+
+Default application name will be decided by name property of `package.json`
+You can customize it after you generate default `manifest.json` which is located `./public/manifest.json`
