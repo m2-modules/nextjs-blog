@@ -30,31 +30,26 @@ const manifest = {
   background_color: '#ffffff',
   theme_color: '#ffffff',
   icons: [
-    // {
-    //   src: '/assets/icons/icon_512.png',
-    //   sizes: '512x512',
-    //   type: 'image/png',
-    // },
-    // {
-    //   src: '/assets/icons/icon_192.png',
-    //   sizes: '192x192',
-    //   type: 'image/png',
-    // },
-    // {
-    //   src: '/assets/icons/icon_120.png',
-    //   sizes: '120x120',
-    //   type: 'image/png',
-    // },
-    // {
-    //   src: '/assets/icons/icon_60.png',
-    //   sizes: '60x60',
-    //   type: 'image/png',
-    // },
-    // {
-    //   src: '/assets/icons/icon_57.png',
-    //   sizes: '57x57',
-    //   type: 'image/png',
-    // },
+    {
+      src: '/icons/icon-192x192.png',
+      sizes: '192x192',
+      type: 'image/png',
+    },
+    {
+      src: '/icons/icon-256x256.png',
+      sizes: '256x256',
+      type: 'image/png',
+    },
+    {
+      src: '/icons/icon-384x384.png',
+      sizes: '384x384',
+      type: 'image/png',
+    },
+    {
+      src: '/icons/icon-512x512.png',
+      sizes: '512x512',
+      type: 'image/png',
+    },
   ],
   screenshots: [
     // {
