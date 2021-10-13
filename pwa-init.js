@@ -51,6 +51,12 @@ const manifest = {
       type: 'image/png',
     },
   ],
+  // shortcuts: [
+  //   {
+  //     name: 'Posts',
+  //     url: '/posts',
+  //   },
+  // ],
   screenshots: [
     // {
     //   src: '/assets/screenshots/screen1.png',
