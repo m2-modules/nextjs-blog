@@ -1,7 +1,6 @@
+import { IPost } from '../config/post.config'
 import marked from 'marked'
 import path from 'path'
-
-import { IPost } from '../config/post.config'
 
 export class PostUtil {
   private readonly posts: IPost[]
