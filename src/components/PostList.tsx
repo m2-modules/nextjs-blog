@@ -1,20 +1,14 @@
-import React, {
-  ChangeEvent,
-  MouseEvent,
-  RefObject,
-  TransitionEvent,
-  createRef,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react'
+import React, { useCallback } from 'react'
 
-import ContentSection from './ContentSection'
-import { IPost } from '../config/post.config'
-import PostPreviewCard from './PostPreviewCard'
-import { Search } from '@material-ui/icons'
-import { postUtil } from '../utils'
 import styled from 'styled-components'
+
+import InfiniteList from '@m2-modules/infinite-list'
+import { Search } from '@material-ui/icons'
+
+import { IPost } from '../config/post.config'
+import { postUtil } from '../utils'
+import ContentSection from './ContentSection'
+import PostPreviewCard from './PostPreviewCard'
 
 const StyledLabel = styled.label`
   display: inline-flex;
@@ -28,7 +22,7 @@ const StyledLabel = styled.label`
     margin: auto 0px;
   }
 
-  & > input {
+  & input {
     flex: 1;
     padding: 10px 0px;
     border: none;
@@ -39,55 +33,63 @@ const StyledLabel = styled.label`
     max-width: none;
   }
 `
-
 export interface PostListProps {
   fetchLimit?: number
 }
 
 const PostList = (props: PostListProps): JSX.Element => {
-  const searchInputRef: RefObject<HTMLInputElement> =
-    createRef<HTMLInputElement>()
+  const fetchLimit: number = props.fetchLimit || 5
+  const fetchPosts = useCallback((): IPost[] => {
+    const searchParams: URLSearchParams = new URLSearchParams(location.search)
+    const query: string | undefined = searchParams
+      .get('query')
+      ?.toLowerCase()
+      .replace(/ /g, '')
+    const page: number = Number(searchParams.get('page')) || 1
+    return postUtil.getPosts(page, fetchLimit, query)
+  }, [fetchLimit])
 
-  const [searchInputActive, setSearchInputActive] = useState<boolean>(false)
-  const [posts, setPosts] = useState<IPost[]>([])
-
-  const onSearchInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const condition: string = event.currentTarget.value.toLowerCase()
-      const postList: IPost[] = postUtil.getPostAll()
-      if (condition) {
-        setPosts(
-          postList.filter(
-            (post: IPost) => postUtil.getMeta(post).indexOf(condition) >= 0
-          )
-        )
-      } else {
-        setPosts(postList)
-      }
-    },
-    []
-  )
-
-  useEffect(() => {
-    setPosts(postUtil.getPostAll())
-  }, [])
+  let query: string = ''
+  if (typeof window !== 'undefined') {
+    query = new URLSearchParams(location.search).get('query') || ''
+  }
 
   return (
     <>
       <StyledLabel>
         <Search />
 
-        <input
-          ref={searchInputRef}
-          type="search"
-          placeholder="Search..."
-          onChange={onSearchInputChange}
-        />
+        <form>
+          <input
+            name="query"
+            type="search"
+            placeholder="Search..."
+            defaultValue={query}
+          />
+        </form>
       </StyledLabel>
+
       <ContentSection>
-        {posts.map((post: IPost) => (
-          <PostPreviewCard key={post.title} post={post} />
-        ))}
+        <InfiniteList
+          fetchHandler={(page: number) => {
+            console.log('Fetched')
+            const searchParams: URLSearchParams = new URLSearchParams(
+              location.search
+            )
+            if (searchParams.has('page')) {
+              searchParams.set('page', String(page))
+            } else {
+              searchParams.append('page', String(page))
+            }
+            history.pushState('', '', `?${searchParams}`)
+
+            const posts: IPost[] = fetchPosts()
+
+            return posts.map((post: IPost, idx: number) => (
+              <PostPreviewCard key={`${post.title}${idx}`} post={post} />
+            ))
+          }}
+        ></InfiniteList>
       </ContentSection>
     </>
   )
