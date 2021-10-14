@@ -1,14 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, {
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 
-import styled from 'styled-components'
-
-import InfiniteList from '@m2-modules/infinite-list'
-import { Search } from '@material-ui/icons'
-
-import { IPost } from '../config/post.config'
-import { postUtil } from '../utils'
 import ContentSection from './ContentSection'
+import { IPost } from '../config/post.config'
+import InfiniteList from '@m2-modules/infinite-list'
 import PostPreviewCard from './PostPreviewCard'
+import { Search } from '@material-ui/icons'
+import { postUtil } from '../utils'
+import styled from 'styled-components'
 
 const StyledLabel = styled.label`
   display: inline-flex;
@@ -40,7 +44,10 @@ export interface PostListProps {
 const PostList = (props: PostListProps): JSX.Element => {
   const fetchLimit: number = props.fetchLimit
   const [query, setQuery] = useState<string>('')
+  const [scrollAdjusted, setScrollAdjusted] = useState<boolean>(false)
+  const [initialPage, setInitialPage] = useState<number>(1)
   const [posts, setPosts] = useState<IPost[]>([])
+  const initialPageRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
 
   const onReachHandler = useCallback((): void => {
     const searchParams: URLSearchParams = new URLSearchParams(location.search)
@@ -53,16 +60,25 @@ const PostList = (props: PostListProps): JSX.Element => {
         setPosts([...posts, ...postUtil.getPosts(page + 1, fetchLimit, query)])
         searchParams.set('page', String(page + 1))
         history.pushState('', '', `?${searchParams.toString()}`)
-      }, 500)
+      }, 1000)
     }
   }, [fetchLimit, posts, query])
 
   useEffect(() => {
     const searchParams: URLSearchParams = new URLSearchParams(location.search)
     const query: string = searchParams.get('query') || ''
+    const initialPage: number = Number(searchParams.get('page') || 1)
 
     setQuery(query)
+    setInitialPage(initialPage)
   }, [])
+
+  useEffect(() => {
+    const previewCard: HTMLElement | null = initialPageRef.current
+    if (!previewCard || scrollAdjusted) return
+    previewCard.scrollIntoView()
+    setScrollAdjusted(true)
+  }, [posts, scrollAdjusted])
 
   return (
     <>
@@ -81,8 +97,17 @@ const PostList = (props: PostListProps): JSX.Element => {
 
       <ContentSection>
         <InfiniteList onReach={onReachHandler}>
-          {posts.map((post: IPost) => (
-            <PostPreviewCard key={`${post.title}`} post={post} />
+          {posts.map((post: IPost, idx: number) => (
+            <div
+              key={`${post.title}`}
+              ref={
+                (initialPage - 1) * fetchLimit === idx
+                  ? initialPageRef
+                  : undefined
+              }
+            >
+              <PostPreviewCard post={post} />
+            </div>
           ))}
         </InfiniteList>
       </ContentSection>

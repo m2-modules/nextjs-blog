@@ -1,17 +1,16 @@
-import React from 'react'
-
-import { NextPage } from 'next'
 import { NextRouter, useRouter } from 'next/router'
 
 import CommonHead from '../../src/components/CommonHead'
+import { NextPage } from 'next'
 import PostList from '../../src/components/PostList'
+import React from 'react'
 import { postUtil } from '../../src/utils'
 
 const PostListPage: NextPage = (): JSX.Element => {
   const router: NextRouter = useRouter()
   let prevHref: string = ''
   let nextHref: string = ''
-  const limit: number = 5
+  const limit: number = 20
 
   if (typeof window !== 'undefined') {
     const searchParams: URLSearchParams = new URLSearchParams(location.search)
