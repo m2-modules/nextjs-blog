@@ -1,12 +1,14 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
-import ContentSection from './ContentSection'
-import { IPost } from '../config/post.config'
-import InfiniteList from '@m2-modules/infinite-list'
-import PostPreviewCard from './PostPreviewCard'
-import { Search } from '@material-ui/icons'
-import { postUtil } from '../utils'
 import styled from 'styled-components'
+
+import InfiniteList from '@m2-modules/infinite-list'
+import { Search } from '@material-ui/icons'
+
+import { IPost } from '../config/post.config'
+import { postUtil } from '../utils'
+import ContentSection from './ContentSection'
+import PostPreviewCard from './PostPreviewCard'
 
 const StyledLabel = styled.label`
   display: inline-flex;
@@ -32,22 +34,35 @@ const StyledLabel = styled.label`
   }
 `
 export interface PostListProps {
-  fetchLimit?: number
+  fetchLimit: number
 }
 
 const PostList = (props: PostListProps): JSX.Element => {
-  const fetchLimit: number = props.fetchLimit || 5
-  const fetchPosts = useCallback(
-    (page: number, limit: number, query: string | null): IPost[] => {
-      return postUtil.getPosts(page, limit, query)
-    },
-    []
-  )
+  const fetchLimit: number = props.fetchLimit
+  const [query, setQuery] = useState<string>('')
+  const [posts, setPosts] = useState<IPost[]>([])
 
-  let query: string = ''
-  if (typeof window !== 'undefined') {
-    query = new URLSearchParams(location.search).get('query') || ''
-  }
+  const onReachHandler = useCallback((): void => {
+    const searchParams: URLSearchParams = new URLSearchParams(location.search)
+    const page: number = Number(searchParams.get('page') || 1)
+
+    if (posts.length === 0) {
+      setPosts(postUtil.getPosts(1, page * fetchLimit, query))
+    } else if (postUtil.hasPosts(page + 1, fetchLimit)) {
+      setTimeout(() => {
+        setPosts([...posts, ...postUtil.getPosts(page + 1, fetchLimit, query)])
+        searchParams.set('page', String(page + 1))
+        history.pushState('', '', `?${searchParams.toString()}`)
+      }, 500)
+    }
+  }, [fetchLimit, posts, query])
+
+  useEffect(() => {
+    const searchParams: URLSearchParams = new URLSearchParams(location.search)
+    const query: string = searchParams.get('query') || ''
+
+    setQuery(query)
+  }, [])
 
   return (
     <>
@@ -65,36 +80,11 @@ const PostList = (props: PostListProps): JSX.Element => {
       </StyledLabel>
 
       <ContentSection>
-        <InfiniteList
-          fetchHandler={(listPage: number) => {
-            const searchParams: URLSearchParams = new URLSearchParams(
-              location.search
-            )
-            const query: string | null = searchParams.get('query')
-            let page: number = listPage
-            let limit: number = fetchLimit
-
-            if (searchParams.get('page')) {
-              page = Number(searchParams.get('page'))
-
-              if (listPage === 1) {
-                limit = (page - listPage + 1) * fetchLimit
-                page = 1
-              }
-            }
-
-            const posts: IPost[] = fetchPosts(page, limit, query)
-
-            if (posts.length) {
-              searchParams.set('page', String(listPage - 1 + page))
-              history.pushState('', '', `?${searchParams.toString()}`)
-            }
-
-            return posts.map((post: IPost, idx: number) => (
-              <PostPreviewCard key={`${post.title}${idx}`} post={post} />
-            ))
-          }}
-        ></InfiniteList>
+        <InfiniteList onReach={onReachHandler}>
+          {posts.map((post: IPost) => (
+            <PostPreviewCard key={`${post.title}`} post={post} />
+          ))}
+        </InfiniteList>
       </ContentSection>
     </>
   )

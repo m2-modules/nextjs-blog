@@ -1,6 +1,7 @@
-import { IPost } from '../config/post.config'
 import marked from 'marked'
 import path from 'path'
+
+import { IPost } from '../config/post.config'
 
 export class PostUtil {
   private readonly posts: IPost[]
@@ -44,8 +45,8 @@ export class PostUtil {
     return found
   }
 
-  hasNext(page: number, query?: string | null): boolean {
-    return Boolean(this.getPosts(page + 1, 1, query).length)
+  hasPosts(page: number, limit?: number, query?: string | null): boolean {
+    return Boolean(this.getPosts(page, limit, query).length)
   }
 
   getThumbnailSrc(post: IPost): string {
