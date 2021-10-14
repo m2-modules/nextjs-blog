@@ -16,7 +16,9 @@
   grid-template-columns: 20vw 1fr 20vw;
   grid-template-areas: '. title social';
 }
-#__next > header > h1 {
+#__next > header > .title {
+  font-size: 2em;
+  font-weight: bold;
   grid-area: title;
 }
 #__next > header > div {

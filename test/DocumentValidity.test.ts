@@ -5,8 +5,10 @@
 import * as fs from 'fs'
 import * as path from 'path'
 
+import { pathUtil, postUtil } from '../src/utils'
 import posts, { IPost } from '../src/config/post.config'
 
+import { blogConfig } from '../src/config/blog.config'
 import marked from 'marked'
 import { organizeHeadings } from '../src/components/ContentIndexer/Heading'
 
@@ -41,6 +43,15 @@ describe(`Document validity test`, () => {
     })
 
     expect(isThumbnailExists).toEqual(true)
+  })
+
+  test(`Every post should have right URL pattern of title`, () => {
+    const hasRightPattern: boolean = posts.every((post: IPost) => {
+      const dashedTitle: string = postUtil.dashedTitle(post)
+      return dashedTitle.indexOf('&') < 0 && dashedTitle.indexOf('?') < 0
+    })
+
+    expect(hasRightPattern).toEqual(true)
   })
 
   test(`Every post should have its description`, () => {

@@ -1,16 +1,14 @@
 import React, {
-  ChangeEvent,
-  MouseEvent,
   RefObject,
-  TransitionEvent,
-  createRef,
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from 'react'
 
 import ContentSection from './ContentSection'
 import { IPost } from '../config/post.config'
+import InfiniteList from '@m2-modules/infinite-list'
 import PostPreviewCard from './PostPreviewCard'
 import { Search } from '@material-ui/icons'
 import { postUtil } from '../utils'
@@ -28,7 +26,7 @@ const StyledLabel = styled.label`
     margin: auto 0px;
   }
 
-  & > input {
+  & input {
     flex: 1;
     padding: 10px 0px;
     border: none;
@@ -39,55 +37,79 @@ const StyledLabel = styled.label`
     max-width: none;
   }
 `
-
 export interface PostListProps {
-  fetchLimit?: number
+  fetchLimit: number
 }
 
 const PostList = (props: PostListProps): JSX.Element => {
-  const searchInputRef: RefObject<HTMLInputElement> =
-    createRef<HTMLInputElement>()
-
-  const [searchInputActive, setSearchInputActive] = useState<boolean>(false)
+  const fetchLimit: number = props.fetchLimit
+  const [query, setQuery] = useState<string>('')
+  const [scrollAdjusted, setScrollAdjusted] = useState<boolean>(false)
+  const [initialPage, setInitialPage] = useState<number>(1)
   const [posts, setPosts] = useState<IPost[]>([])
+  const initialPageRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null)
 
-  const onSearchInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const condition: string = event.currentTarget.value.toLowerCase()
-      const postList: IPost[] = postUtil.getPostAll()
-      if (condition) {
-        setPosts(
-          postList.filter(
-            (post: IPost) => postUtil.getMeta(post).indexOf(condition) >= 0
-          )
-        )
-      } else {
-        setPosts(postList)
-      }
-    },
-    []
-  )
+  const onReachHandler = useCallback((): void => {
+    const searchParams: URLSearchParams = new URLSearchParams(location.search)
+    const page: number = Number(searchParams.get('page') || 1)
+
+    if (posts.length === 0) {
+      setPosts(postUtil.getPosts(1, page * fetchLimit, query))
+    } else if (postUtil.hasPosts(page + 1, fetchLimit)) {
+      setTimeout(() => {
+        setPosts([...posts, ...postUtil.getPosts(page + 1, fetchLimit, query)])
+        searchParams.set('page', String(page + 1))
+        history.pushState('', '', `?${searchParams.toString()}`)
+      }, 1000)
+    }
+  }, [fetchLimit, posts, query])
 
   useEffect(() => {
-    setPosts(postUtil.getPostAll())
+    const searchParams: URLSearchParams = new URLSearchParams(location.search)
+    const query: string = searchParams.get('query') || ''
+    const initialPage: number = Number(searchParams.get('page') || 1)
+
+    setQuery(query)
+    setInitialPage(initialPage)
   }, [])
+
+  useEffect(() => {
+    const previewCard: HTMLElement | null = initialPageRef.current
+    if (!previewCard || scrollAdjusted) return
+    previewCard.scrollIntoView()
+    setScrollAdjusted(true)
+  }, [posts, scrollAdjusted])
 
   return (
     <>
       <StyledLabel>
         <Search />
 
-        <input
-          ref={searchInputRef}
-          type="search"
-          placeholder="Search..."
-          onChange={onSearchInputChange}
-        />
+        <form>
+          <input
+            name="query"
+            type="search"
+            placeholder="Search..."
+            defaultValue={query}
+          />
+        </form>
       </StyledLabel>
+
       <ContentSection>
-        {posts.map((post: IPost) => (
-          <PostPreviewCard key={post.title} post={post} />
-        ))}
+        <InfiniteList onReach={onReachHandler}>
+          {posts.map((post: IPost, idx: number) => (
+            <div
+              key={`${post.title}`}
+              ref={
+                (initialPage - 1) * fetchLimit === idx
+                  ? initialPageRef
+                  : undefined
+              }
+            >
+              <PostPreviewCard post={post} />
+            </div>
+          ))}
+        </InfiniteList>
       </ContentSection>
     </>
   )

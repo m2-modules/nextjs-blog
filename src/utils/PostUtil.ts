@@ -1,6 +1,7 @@
-import { IPost } from '../config/post.config'
 import marked from 'marked'
 import path from 'path'
+
+import { IPost } from '../config/post.config'
 
 export class PostUtil {
   private readonly posts: IPost[]
@@ -18,22 +19,21 @@ export class PostUtil {
     this.rootPath = rootPath
   }
 
-  getPosts(page: number, limit = 10, includeNonPublished = false): IPost[] {
+  getPosts(page: number, limit = 10, query?: string | null): IPost[] {
     const offset: number = (page - 1) * limit
 
-    if (includeNonPublished) {
-      return this.posts.slice(offset, offset + limit)
-    } else {
-      return this.publishedPosts.slice(offset, offset + limit)
+    let posts: IPost[] = this.getPostAll()
+    if (query) {
+      posts = posts.filter(
+        (post: IPost) => this.getMeta(post).indexOf(query) >= 0
+      )
     }
+
+    return posts.slice(offset, offset + limit)
   }
 
-  getPostAll(includeNonPublished = false): IPost[] {
-    if (includeNonPublished) {
-      return this.posts.slice(0)
-    } else {
-      return this.publishedPosts.slice(0)
-    }
+  getPostAll(): IPost[] {
+    return this.publishedPosts.slice(0)
   }
 
   getPostByTitle(title: string): IPost {
@@ -43,6 +43,10 @@ export class PostUtil {
     if (!found) throw new Error('Failed to find post by title')
 
     return found
+  }
+
+  hasPosts(page: number, limit?: number, query?: string | null): boolean {
+    return Boolean(this.getPosts(page, limit, query).length)
   }
 
   getThumbnailSrc(post: IPost): string {

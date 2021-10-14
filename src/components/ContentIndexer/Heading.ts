@@ -13,13 +13,13 @@ export class Heading {
 
   private computeDepth(heading: HTMLHeadingElement): 1 | 2 | 3 {
     switch (heading.tagName) {
-      case 'H1':
+      case 'H2':
         return 1
 
-      case 'H2':
+      case 'H3':
         return 2
 
-      case 'H3':
+      case 'H4':
         return 3
 
       default:

@@ -12,6 +12,7 @@ export type CommonHeadProps = {
   imageURL?: string
   description?: string
   keywords?: string[]
+  customMeta?: JSX.Element
 }
 
 const CommonHead = (props: CommonHeadProps): JSX.Element => {
@@ -91,6 +92,8 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
       )}
 
       {author ? <meta name="author" content={author} /> : ''}
+
+      {props.customMeta ? props.customMeta : <></>}
     </Head>
   )
 }
