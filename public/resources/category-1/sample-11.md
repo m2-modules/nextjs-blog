@@ -1,4 +1,4 @@
-# An h1 header
+## An h1 header
 
 Paragraphs are separated by a blank line.
 
@@ -22,7 +22,7 @@ Use 3 dashes for an em-dash. Use 2 dashes for ranges (ex., "it's all
 in chapters 12--14"). Three dots ... will be converted to an ellipsis.
 Unicode is supported. ☺
 
-## An h2 header
+### An h2 header
 
 Here's a numbered list:
 
@@ -33,7 +33,7 @@ Here's a numbered list:
 Note again how the actual text starts at 4 columns in (4 characters
 from the left side). Here's a code sample:
 
-    # Let me re-iterate ...
+    ## Let me re-iterate ...
     for i in 1 .. 10 { do-something(i) }
 
 As you probably guessed, indented 4 spaces. By the way, instead of
@@ -50,14 +50,14 @@ delimited block for Pandoc to syntax highlight it:
 
 ```python
 import time
-# Quick, count to ten!
+## Quick, count to ten!
 for i in range(10):
-    # (but not *too* quick)
+    ## (but not *too* quick)
     time.sleep(0.5)
     print i
 ```
 
-### An h3 header
+#### An h3 header
 
 Now a nested list:
 
