@@ -19,6 +19,8 @@ const PostListPage: NextPage = (): JSX.Element => {
   const query: string | null = searchParams.get('query')
   const page: number = Number(searchParams.get('page') || 1)
 
+  if (!postUtil.hasPosts(page, limit, query)) router.replace('404')
+
   if (page > 1) {
     searchParams.set('page', String(page - 1))
     url.search = searchParams.toString()
