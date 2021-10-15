@@ -6,6 +6,7 @@ import { NextRouter, useRouter } from 'next/router'
 import { blogConfig, IBlogConfig } from '../config/blog.config'
 import { gaConfig } from '../config/ga.config'
 import menuConfigs, { IMenuConfig } from '../config/menu.config'
+import { pathUtil } from '../utils'
 
 export type CommonHeadProps = {
   title?: string
@@ -22,7 +23,6 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
   )
 
   const title: string = computeTitle(props, blogConfig, menuConfig)
-  const siteURL: string = blogConfig.siteURL
   const imageURL: string | undefined = props.imageURL
 
   const description: string | undefined =
@@ -65,13 +65,13 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
         dangerouslySetInnerHTML={{
           __html: `
           if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
+            navigator.serviceWorker.register('/service-worker.js')
           }
         `,
         }}
       ></script>
 
-      <link rel="canonical" href={siteURL} />
+      <link rel="canonical" href={pathUtil.absolutePath(router.asPath)} />
 
       <meta property="og:title" content={title} />
 
