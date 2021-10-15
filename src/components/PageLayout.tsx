@@ -8,7 +8,7 @@ import { IPost } from '../config/post.config'
 import { postUtil } from '../utils'
 import BlogTitle from './BlogTitle'
 import ContentIndexer from './ContentIndexer/ContentIndexer'
-import Copyright from './CopyRight'
+import Copyright from './Copyright'
 import NavBar from './NavBar'
 import SocialLinkBar from './SocialLinkBar'
 
