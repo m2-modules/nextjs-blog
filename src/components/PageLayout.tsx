@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 
-import BlogTitle from './BlogTitle'
-import ContentIndexer from './ContentIndexer/ContentIndexer'
-import CopyRight from './CopyRight'
-import { IPost } from '../config/post.config'
-import NavBar from './NavBar'
 import { PostDetailPageProps } from '../../pages/posts/[title]'
-import SocialLinkBar from './SocialLinkBar'
 import { blogConfig } from '../config/blog.config'
 import { layoutConfig } from '../config/layout.config'
 import menuConfigs from '../config/menu.config'
+import { IPost } from '../config/post.config'
 import { postUtil } from '../utils'
+import BlogTitle from './BlogTitle'
+import ContentIndexer from './ContentIndexer/ContentIndexer'
+import Copyright from './CopyRight'
+import NavBar from './NavBar'
+import SocialLinkBar from './SocialLinkBar'
 
 export type PageLayoutProps = Partial<PostDetailPageProps> & {
   component: JSX.Element
@@ -51,7 +51,7 @@ const PageLayout = (props: PageLayoutProps): JSX.Element => {
 
       <footer>
         {layoutConfig.footer?.copyright ? (
-          <CopyRight
+          <Copyright
             message={layoutConfig.footer.copyright.message}
             align={layoutConfig.footer.copyright.align}
           />

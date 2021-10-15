@@ -1,6 +1,29 @@
 # Static website based on [NextJS](https://nextjs.org)
 
-## To deploy through your github page.
+---
+
+## Table of contents
+
+1. [To deploy through your github page](#to-deploy-through-your-github-page)
+1. [To write your own posting](#to-write-your-own-posting)
+1. [Renew](#renew)
+1. [Detail of configurations](#detail-of-configurations)
+   1. [Blog config](#blog-config)
+   1. [Menu config](#menu-config)
+   1. [Post config](#post-config)
+   1. [Layout config](#layout-config)
+   1. [Google analytics config](#google-analytics-config)
+1. [SEO](#seo)
+   1. [Sitemap.xml](#sitemapxml)
+   1. [Robots.txt](#robotstxt)
+1. [PWA](#pwa)
+1. [Components](components)
+   1. [Copyright Display](copyright-display)
+   1. [Comments on posting](comments-on-posting)
+
+---
+
+## To deploy through your github page
 
 1. `Fork` this repository to your own repository.
 1. Change name of forked repository to your github page repository name
@@ -27,7 +50,9 @@
    - There might be bunch of sample posting.\
    - You can add your newly created posting by adding new element which has same structure compared with sample posting config.
 
-## Renew from [@m2-modules/nextjs-blog](https://github.com/m2-modules/nextjs-blog)
+## Renew
+
+You can fetch latest update from [@m2-modules/nextjs-blog](https://github.com/m2-modules/nextjs-blog).
 
 - As being upgraded this repository, You may want to renew your own blog from original branch.
   For doing this you need to merge `draft` branch of `nextjs-blog` to yours.
@@ -68,6 +93,17 @@ You can add your own menu to edit this configuration
 | thumbnailName | File name that system can refer to find thumbnail image for the posting         | false    | 'thumbnail.jpeg'                 |
 | tags          | Tags can describe what current posting about. It will be used for SEO           | true     | ['Travel', 'Traveling', 'Hobby'] |
 
+### Layout config
+
+| Prop       | Description                                         | Required | Example |
+| ---------- | --------------------------------------------------- | -------- | :-----: |
+| postDetail | Components that can be shown in posting detail page | false    |    -    |
+| footer     | Components that can be shown in footer section      | false    |    -    |
+
+> Each layout has detail configurations.
+>
+> If you want to check detail of it please refer [components section](#components)
+
 ### Google analytics config
 
 You can use google analytics report and APIs by setting up below configuration.
@@ -91,6 +127,11 @@ To generate sitemap.xml you should config your publishing site URL in `package.j
 
 Github action will generate `sitemap.xml` file right before publish it.
 
+### Robots.txt
+
+You can find default `robots.txt` file in `public/robots.txt` which is configured allow any searching engine robots.
+If you want to modify it you can change it directly.
+
 ## PWA
 
 To activate PWA you need to run below script to initialize `manifest.json`
@@ -101,3 +142,25 @@ $ yarn pwa:init
 
 Default application name will be decided by name property of `package.json`
 You can customize it after you generate default `manifest.json` which is located `./public/manifest.json`
+
+## Components
+
+There are few components that you can decide using it or not.
+
+Supporting components:
+
+- Copyright display
+- Comments (Utterances)
+
+### Copyright display
+
+This is copyright display component which is located `footer` section of webpage.
+Based on `blogConfig.author` ^ `blogConfig.email`, it will be appeared by default.
+If you want to edit it you can change it in `layout.config.ts`
+
+### Comments on posting
+
+Detail of posting page has component to render [`Utterances`](https://utteranc.es/) which is awesome open source.
+If you want to implement it you need to configure few properties in `layout.config.ts`
+
+More details about the properties you can refer [`Utterances`](https://utteranc.es/) page.

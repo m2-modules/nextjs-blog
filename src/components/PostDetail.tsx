@@ -1,13 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react'
 
-import ContentIndexer from '../components/ContentIndexer/ContentIndexer'
-import ContentSection from '../components/ContentSection'
+import styled from 'styled-components'
+
 import DrawPanel from '@m2-modules/draw-panel'
 import { FormatListNumbered } from '@material-ui/icons'
-import { IPost } from '../config/post.config'
+
 import markdownStyles from '../assets/styles/markdown.module.css'
+import ContentIndexer from '../components/ContentIndexer/ContentIndexer'
+import ContentSection from '../components/ContentSection'
+import { layoutConfig } from '../config/layout.config'
+import { IPost } from '../config/post.config'
 import { postUtil } from '../utils'
-import styled from 'styled-components'
+import Utterances from './Utterances'
 
 const StyledButton = styled.button`
   margin: auto 0px auto auto;
@@ -91,6 +95,17 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
             __html: content || '',
           }}
         />
+
+        {layoutConfig.postDetail?.utterances ? (
+          <Utterances
+            repo={layoutConfig.postDetail.utterances.repo}
+            theme={layoutConfig.postDetail.utterances.theme}
+            issueTerm={layoutConfig.postDetail.utterances.issueTerm}
+            issueLabel={layoutConfig.postDetail.utterances.issueTerm}
+          />
+        ) : (
+          ''
+        )}
       </ContentSection>
     </>
   ) : (

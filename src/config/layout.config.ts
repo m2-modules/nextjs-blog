@@ -1,3 +1,4 @@
+import { UtterancesProps } from '../components/Utterances'
 import { blogConfig } from './blog.config'
 
 export interface ICopyrightConfig {
@@ -10,10 +11,21 @@ export interface ILayoutFooterConfig {
 }
 
 export interface ILayoutConfig {
+  postDetail?: {
+    utterances?: UtterancesProps
+  }
   footer?: ILayoutFooterConfig
 }
 
 export const layoutConfig: ILayoutConfig = {
+  postDetail: {
+    utterances: {
+      repo: 'your_git/repository',
+      issueTerm: 'pathname',
+      issueLabel: 'comment',
+      theme: 'preferred-color-scheme',
+    },
+  },
   footer: {
     copyright: {
       message: `ⓒ 2021. ${blogConfig.author || ''} ${

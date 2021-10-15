@@ -1,5 +1,6 @@
-import { ICopyrightConfig } from '../config/layout.config'
 import styled from 'styled-components'
+
+import { ICopyrightConfig } from '../config/layout.config'
 
 const StyledParagraph = styled.p<{ align: 'left' | 'center' | 'right' }>`
   font-size: 0.8rem;
@@ -10,11 +11,11 @@ const StyledParagraph = styled.p<{ align: 'left' | 'center' | 'right' }>`
   border-top: 1px solid #eee;
 `
 
-const CopyRight = (props: ICopyrightConfig): JSX.Element => {
+const Copyright = (props: ICopyrightConfig): JSX.Element => {
   const message: string = props.message
   const align: 'left' | 'center' | 'right' = props.align
 
   return <StyledParagraph align={align}>{message}</StyledParagraph>
 }
 
-export default CopyRight
+export default Copyright
