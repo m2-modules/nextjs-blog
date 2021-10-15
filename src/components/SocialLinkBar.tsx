@@ -66,7 +66,7 @@ const SocialLinkBar = (props: SocialLinkBarProps): JSX.Element => {
   const socials: SocialInfo[] = props.socials
 
   return (
-    <AnchorContainer>
+    <AnchorContainer id="social-link-bar">
       {socials.map(({ type, url }: SocialInfo, idx: number) => {
         return (
           <StyledAnchor
