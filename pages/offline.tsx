@@ -9,7 +9,7 @@ const Offline: NextPage = (): JSX.Element => {
     <>
       <CommonHead />
       <h1>Missing network connection!</h1>
-      <p>Please check your network connection and retry</p>
+      <p>Please check your network connection and try again.</p>
     </>
   )
 }

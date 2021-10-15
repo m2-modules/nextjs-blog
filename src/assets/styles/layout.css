@@ -16,14 +16,16 @@
   grid-template-columns: 20vw 1fr 20vw;
   grid-template-areas: '. title social';
 }
-#__next > header > .title {
+#__next > header > #title {
   font-size: 2em;
   font-weight: bold;
   grid-area: title;
+  text-align: center;
 }
-#__next > header > div {
+#__next > header > #social-link-bar {
   grid-area: social;
   margin: auto 0px auto auto;
+  padding: 0px 10px;
 }
 #__next > nav {
   grid-area: nav;
@@ -44,7 +46,11 @@
     grid-template-columns: 1fr;
     grid-template-areas: 'title' 'social';
   }
-  #__next > header > div {
+  #__next > header > #title {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  #__next > header > #social-link-bar {
     margin: auto;
     padding-bottom: 10px;
   }

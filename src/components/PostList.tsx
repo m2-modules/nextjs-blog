@@ -6,13 +6,15 @@ import React, {
   useState,
 } from 'react'
 
-import ContentSection from './ContentSection'
-import { IPost } from '../config/post.config'
-import InfiniteList from '@m2-modules/infinite-list'
-import PostPreviewCard from './PostPreviewCard'
-import { Search } from '@material-ui/icons'
-import { postUtil } from '../utils'
 import styled from 'styled-components'
+
+import InfiniteList from '@m2-modules/infinite-list'
+import { Search } from '@material-ui/icons'
+
+import { IPost } from '../config/post.config'
+import { postUtil } from '../utils'
+import ContentSection from './ContentSection'
+import PostPreviewCard from './PostPreviewCard'
 
 const StyledLabel = styled.label`
   display: inline-flex;
@@ -20,10 +22,14 @@ const StyledLabel = styled.label`
   border-bottom: 1px solid #aaa;
   margin: 0px 20px;
   grid-gap: 10px;
-  transition: all 0.5s ease-in-out;
 
   & > * {
     margin: auto 0px;
+  }
+
+  & > form {
+    display: flex;
+    flex: 1;
   }
 
   & input {
@@ -31,6 +37,10 @@ const StyledLabel = styled.label`
     padding: 10px 0px;
     border: none;
     outline: none;
+  }
+
+  & .icon {
+    max-width: 1em;
   }
 
   @media only screen and (max-width: 800px) {
@@ -83,7 +93,7 @@ const PostList = (props: PostListProps): JSX.Element => {
   return (
     <>
       <StyledLabel>
-        <Search />
+        <Search className="icon" />
 
         <form>
           <input
