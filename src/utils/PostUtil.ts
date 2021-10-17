@@ -1,7 +1,6 @@
+import { IPost } from '../config/post.config'
 import marked from 'marked'
 import path from 'path'
-
-import { IPost } from '../config/post.config'
 
 export class PostUtil {
   private readonly posts: IPost[]
@@ -24,8 +23,9 @@ export class PostUtil {
 
     let posts: IPost[] = this.getPostAll()
     if (query) {
+      const generalizedQuery: string = this.generalize(query)
       posts = posts.filter(
-        (post: IPost) => this.getMeta(post).indexOf(query) >= 0
+        (post: IPost) => this.getMeta(post).indexOf(generalizedQuery) >= 0
       )
     }
 
@@ -82,8 +82,12 @@ export class PostUtil {
   }
 
   getMeta(post: IPost): string {
-    return `${post.title}${post.description}${post.tags.join()}`
-      .replace(/ /g, '')
-      .toLowerCase()
+    return this.generalize(
+      `${post.title}${post.description}${post.tags.join()}`
+    )
+  }
+
+  generalize(text: string): string {
+    return text.replace(/ /g, '').toLocaleLowerCase()
   }
 }

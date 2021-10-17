@@ -6,15 +6,13 @@ import React, {
   useState,
 } from 'react'
 
-import styled from 'styled-components'
-
-import InfiniteList from '@m2-modules/infinite-list'
-import { Search } from '@material-ui/icons'
-
-import { IPost } from '../config/post.config'
-import { postUtil } from '../utils'
 import ContentSection from './ContentSection'
+import { IPost } from '../config/post.config'
+import InfiniteList from '@m2-modules/infinite-list'
 import PostPreviewCard from './PostPreviewCard'
+import { Search } from '@material-ui/icons'
+import { postUtil } from '../utils'
+import styled from 'styled-components'
 
 const StyledLabel = styled.label`
   display: inline-flex;
@@ -48,12 +46,13 @@ const StyledLabel = styled.label`
   }
 `
 export interface PostListProps {
+  query: string
   fetchLimit: number
 }
 
 const PostList = (props: PostListProps): JSX.Element => {
+  const query: string = props.query
   const fetchLimit: number = props.fetchLimit
-  const [query, setQuery] = useState<string>('')
   const [scrollAdjusted, setScrollAdjusted] = useState<boolean>(false)
   const [initialPage, setInitialPage] = useState<number>(1)
   const [posts, setPosts] = useState<IPost[]>([])
@@ -61,6 +60,7 @@ const PostList = (props: PostListProps): JSX.Element => {
 
   const onReachHandler = useCallback((): void => {
     const searchParams: URLSearchParams = new URLSearchParams(location.search)
+
     const page: number = Number(searchParams.get('page') || 1)
 
     if (posts.length === 0) {
@@ -76,10 +76,8 @@ const PostList = (props: PostListProps): JSX.Element => {
 
   useEffect(() => {
     const searchParams: URLSearchParams = new URLSearchParams(location.search)
-    const query: string = searchParams.get('query') || ''
     const initialPage: number = Number(searchParams.get('page') || 1)
 
-    setQuery(query)
     setInitialPage(initialPage)
   }, [])
 

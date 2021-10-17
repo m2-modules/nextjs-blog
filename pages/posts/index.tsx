@@ -1,11 +1,10 @@
-import React from 'react'
-
-import { NextPage } from 'next'
 import { NextRouter, useRouter } from 'next/router'
+import { pathUtil, postUtil } from '../../src/utils'
 
 import CommonHead from '../../src/components/CommonHead'
+import { NextPage } from 'next'
 import PostList from '../../src/components/PostList'
-import { pathUtil, postUtil } from '../../src/utils'
+import React from 'react'
 
 const PostListPage: NextPage = (): JSX.Element => {
   const router: NextRouter = useRouter()
@@ -45,7 +44,7 @@ const PostListPage: NextPage = (): JSX.Element => {
           </>
         }
       />
-      <PostList fetchLimit={limit} />
+      <PostList fetchLimit={limit} query={query || ''} />
     </>
   )
 }
