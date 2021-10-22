@@ -14,6 +14,29 @@ import { pathUtil, postUtil } from '../utils'
 import TagSpreader from './TagSpreader'
 import Utterances from './Utterances'
 
+const HeadContainer = styled.div`
+  display: flex;
+  flex: 1;
+`
+
+const StyledHeading = styled.h1`
+  padding: 0px 20px;
+  margin-bottom: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  & > .description {
+    font-size: 1rem;
+    margin-top: 10px;
+    color: #666;
+    font-weight: initial;
+    font-style: italic;
+  }
+`
+
 const ContentContainer = styled.div`
   padding: 20px;
   overflow: auto;
@@ -41,10 +64,12 @@ const StyledImg = styled.img`
 
 export type PostDetailProps = {
   post: IPost
+  scrollHandler: () => void
 }
 
 const PostDetail = (props: PostDetailProps): JSX.Element => {
   const post: IPost = props.post
+  const scrollHandler: () => void = props.scrollHandler
   const [asideOpen, setAsideOpen] = useState<boolean>(false)
   const [content, setContent] = useState<string | null>(null)
 
@@ -69,11 +94,18 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
 
   return post ? (
     <>
-      <StyledButton className="transparent" onClick={toggleAsidePanel}>
-        <FormatListNumbered />
-      </StyledButton>
+      <HeadContainer>
+        <StyledHeading>
+          <span className="title">{post.title}</span>
+          <span className="description">{post.description}</span>
+        </StyledHeading>
 
-      <ContentContainer>
+        <StyledButton className="transparent" onClick={toggleAsidePanel}>
+          <FormatListNumbered />
+        </StyledButton>
+      </HeadContainer>
+
+      <ContentContainer onScroll={scrollHandler}>
         <ContentSection>
           {post.thumbnailName ? (
             <StyledImg

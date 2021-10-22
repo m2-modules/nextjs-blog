@@ -18,6 +18,7 @@ export type PageLayoutProps = Partial<PostDetailPageProps> & {
 
 const PageLayout = (props: PageLayoutProps): JSX.Element => {
   const component: JSX.Element = props.component
+  component.props.scrollHandler = () => console.log('Scrolling')
   const postTitle: string | undefined = props.postTitle
 
   const [content, setContent] = useState<string | null>(null)

@@ -42,6 +42,13 @@
 }
 
 @media only screen and (max-width: 800px) {
+  #__next {
+    grid-template-areas:
+      'header header header'
+      'nav nav nav'
+      'main main main'
+      'footer footer footer';
+  }
   #__next > header {
     grid-template-columns: 1fr;
     grid-template-areas: 'title' 'social';
@@ -57,11 +64,20 @@
   #__next > aside {
     display: none;
   }
-  #__next {
+
+  #__next.shrink-headroom {
     grid-template-areas:
-      'header header header'
-      'nav nav nav'
+      'header nav nav'
       'main main main'
       'footer footer footer';
+  }
+  #__next.shrink-headroom > header > #social-link-bar {
+    position:absolute;
+    right: 0px;
+    padding: 0px 10px 0px 0px;
+  }
+  #__next.shrink-headroom > nav {
+    display: flex;
+    margin: auto auto auto 10px;
   }
 }
