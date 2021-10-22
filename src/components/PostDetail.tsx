@@ -11,19 +11,21 @@ import ContentSection from '../components/ContentSection'
 import { layoutConfig } from '../config/layout.config'
 import { IPost } from '../config/post.config'
 import { postUtil } from '../utils'
+import TagSpreader from './TagSpreader'
 import Utterances from './Utterances'
-
-const StyledButton = styled.button`
-  margin: auto 0px auto auto;
-  visibility: hidden;
-
-  @media only screen and (max-width: 800px) {
-    visibility: visible;
-  }
-`
 
 const ContentContainer = styled.div`
   padding: 20px;
+  overflow: auto;
+`
+
+const StyledButton = styled.button`
+  margin: auto 0px auto auto;
+  display: none;
+
+  @media only screen and (max-width: 800px) {
+    display: block;
+  }
 `
 
 const StyledImg = styled.img`
@@ -45,6 +47,13 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
   const [asideOpen, setAsideOpen] = useState<boolean>(false)
   const [content, setContent] = useState<string | null>(null)
 
+  const linkBuilder: (tag: string) => string = (tag: string): string => {
+    const searchParams: URLSearchParams = new URLSearchParams()
+    searchParams.append('query', tag)
+
+    return `posts?${searchParams.toString()}`
+  }
+
   const toggleAsidePanel = useCallback(() => {
     setAsideOpen(!asideOpen)
   }, [asideOpen])
@@ -59,54 +68,58 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
 
   return post ? (
     <>
-      <StyledButton
-        style={{ marginLeft: 'auto' }}
-        className="transparent"
-        onClick={toggleAsidePanel}
-      >
+      <StyledButton className="transparent" onClick={toggleAsidePanel}>
         <FormatListNumbered />
       </StyledButton>
 
-      <ContentSection>
-        {post.thumbnailName ? (
-          <StyledImg
-            src={postUtil.getThumbnailSrc(post)}
-            alt={`${post.title}`}
+      <ContentContainer>
+        <ContentSection>
+          {post.thumbnailName ? (
+            <StyledImg
+              src={postUtil.getThumbnailSrc(post)}
+              alt={`${post.title}`}
+            />
+          ) : (
+            ''
+          )}
+
+          {content ? (
+            <DrawPanel
+              position="right"
+              open={asideOpen}
+              closeHandler={closeAsidePanel}
+            >
+              <ContentIndexer content={content} />
+            </DrawPanel>
+          ) : (
+            ''
+          )}
+
+          <div
+            className={markdownStyles.markdown}
+            dangerouslySetInnerHTML={{
+              __html: content || '',
+            }}
           />
-        ) : (
-          ''
-        )}
 
-        {content ? (
-          <DrawPanel
-            position="right"
-            open={asideOpen}
-            closeHandler={closeAsidePanel}
-          >
-            <ContentIndexer content={content} />
-          </DrawPanel>
-        ) : (
-          ''
-        )}
+          <h2>Tags</h2>
+          <TagSpreader tags={post.tags} linkBuilder={linkBuilder} />
 
-        <ContentContainer
-          className={markdownStyles.markdown}
-          dangerouslySetInnerHTML={{
-            __html: content || '',
-          }}
-        />
-
-        {layoutConfig.postDetail?.utterances ? (
-          <Utterances
-            repo={layoutConfig.postDetail.utterances.repo}
-            theme={layoutConfig.postDetail.utterances.theme}
-            issueTerm={layoutConfig.postDetail.utterances.issueTerm}
-            issueLabel={layoutConfig.postDetail.utterances.issueTerm}
-          />
-        ) : (
-          ''
-        )}
-      </ContentSection>
+          {layoutConfig.postDetail?.utterances ? (
+            <>
+              <h2>Comments</h2>
+              <Utterances
+                repo={layoutConfig.postDetail.utterances.repo}
+                theme={layoutConfig.postDetail.utterances.theme}
+                issueTerm={layoutConfig.postDetail.utterances.issueTerm}
+                issueLabel={layoutConfig.postDetail.utterances.issueTerm}
+              />
+            </>
+          ) : (
+            ''
+          )}
+        </ContentSection>
+      </ContentContainer>
     </>
   ) : (
     <></>
