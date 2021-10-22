@@ -10,7 +10,7 @@ import ContentIndexer from '../components/ContentIndexer/ContentIndexer'
 import ContentSection from '../components/ContentSection'
 import { layoutConfig } from '../config/layout.config'
 import { IPost } from '../config/post.config'
-import { postUtil } from '../utils'
+import { pathUtil, postUtil } from '../utils'
 import TagSpreader from './TagSpreader'
 import Utterances from './Utterances'
 
@@ -51,7 +51,7 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
     const searchParams: URLSearchParams = new URLSearchParams()
     searchParams.append('query', tag)
 
-    return `posts?${searchParams.toString()}`
+    return pathUtil.absolutePath(`posts?${searchParams.toString()}`)
   }
 
   const toggleAsidePanel = useCallback(() => {

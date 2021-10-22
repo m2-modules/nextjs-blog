@@ -102,7 +102,8 @@ const PostPreviewCard = (props: PostPreviewCardProps): JSX.Element => {
   const linkBuilder: (tag: string) => string = (tag: string): string => {
     const searchParams: URLSearchParams = new URLSearchParams()
     searchParams.append('query', tag)
-    return `posts?${searchParams.toString()}`
+
+    return pathUtil.absolutePath(`posts?${searchParams.toString()}`)
   }
 
   return (
