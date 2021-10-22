@@ -19,12 +19,12 @@ export interface ILayoutConfig {
 
 export const layoutConfig: ILayoutConfig = {
   postDetail: {
-    utterances: {
-      repo: 'your_git/repository',
-      issueTerm: 'pathname',
-      issueLabel: 'comment',
-      theme: 'preferred-color-scheme',
-    },
+    // utterances: {
+    //   repo: 'your_git/repository',
+    //   issueTerm: 'pathname',
+    //   issueLabel: 'comment',
+    //   theme: 'preferred-color-scheme',
+    // },
   },
   footer: {
     copyright: {

@@ -1,9 +1,10 @@
-import { pathUtil, postUtil } from '../utils'
+import React from 'react'
+
+import styled from 'styled-components'
 
 import { IPost } from '../config/post.config'
-import React from 'react'
+import { pathUtil, postUtil } from '../utils'
 import TagSpreader from './TagSpreader'
-import styled from 'styled-components'
 
 interface IStyledArticle {
   hasThumbnail: boolean
@@ -15,7 +16,6 @@ const StyledArticle = styled.article<IStyledArticle>`
   border: 1px solid #eee;
   margin: 20px;
   padding: 20px;
-  cursor: pointer;
 
   display: grid;
   grid-gap: 10px;
@@ -99,26 +99,32 @@ export interface PostPreviewCardProps extends React.HTMLProps<HTMLElement> {
 const PostPreviewCard = (props: PostPreviewCardProps): JSX.Element => {
   const post: IPost = props.post
 
+  const linkBuilder: (tag: string) => string = (tag: string): string => {
+    const searchParams: URLSearchParams = new URLSearchParams()
+    searchParams.append('query', tag)
+    return `posts?${searchParams.toString()}`
+  }
+
   return (
-    <a href={pathUtil.absolutePath(`/posts/${postUtil.dashedTitle(post)}`)}>
-      <StyledArticle hasThumbnail={Boolean(post.thumbnailName)}>
+    <StyledArticle hasThumbnail={Boolean(post.thumbnailName)}>
+      <a href={pathUtil.absolutePath(`/posts/${postUtil.dashedTitle(post)}`)}>
         <h2 id="title">{post.title}</h2>
-        <p id="date">{new Date(post.publishedAt).toLocaleDateString()}</p>
-        <TagSpreader tags={post.tags} />
-        {post.thumbnailName ? (
-          <StyledImg
-            id="thumbnail"
-            src={postUtil.getThumbnailSrc(post)}
-            alt={post.title}
-          />
-        ) : (
-          ''
-        )}
-        <p style={{ margin: 0 }} id="description">
-          {post.description}
-        </p>
-      </StyledArticle>
-    </a>
+      </a>
+      <p id="date">{new Date(post.publishedAt).toLocaleDateString()}</p>
+      <TagSpreader tags={post.tags} linkBuilder={linkBuilder} />
+      {post.thumbnailName ? (
+        <StyledImg
+          id="thumbnail"
+          src={postUtil.getThumbnailSrc(post)}
+          alt={post.title}
+        />
+      ) : (
+        ''
+      )}
+      <p style={{ margin: 0 }} id="description">
+        {post.description}
+      </p>
+    </StyledArticle>
   )
 }
 
