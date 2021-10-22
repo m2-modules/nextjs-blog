@@ -32,6 +32,7 @@ const StyledImg = styled.img`
   width: -webkit-fill-available;
   height: 300px;
   object-fit: cover;
+  margin-bottom: 20px;
 
   @media only screen and (max-width: 800px) {
     height: 200px;
