@@ -27,7 +27,7 @@ export async function getStaticProps(
 }
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
-  const categories: string[] = Object.keys(postUtil.categoriesWithCount())
+  const categories: string[] = Object.keys(postUtil.categoriesWithStatus())
   return {
     paths: categories.map((category: string) => ({
       params: { category },

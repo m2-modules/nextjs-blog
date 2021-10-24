@@ -1,6 +1,6 @@
 import { pathUtil, postUtil } from '../../utils'
 
-import { CategoriesWithCount } from '../../utils/PostUtil'
+import { CategoriesWithStatus } from '../../utils/PostUtil'
 import styled from 'styled-components'
 
 const StyledNav = styled.nav`
@@ -58,23 +58,25 @@ const StyledList = styled.li`
 export interface CategoryIndexerProps extends React.HTMLProps<HTMLElement> {}
 
 const CategoryIndexer = (props: CategoryIndexerProps): JSX.Element => {
-  const categoriesWithCount: CategoriesWithCount =
-    postUtil.categoriesWithCount()
+  const categoriesWithStatus: CategoriesWithStatus =
+    postUtil.categoriesWithStatus()
 
   return (
     <StyledNav>
       <ul>
-        {Object.keys(categoriesWithCount).map((category: string) => (
+        {Object.keys(categoriesWithStatus).map((category: string) => (
           <StyledList key={category}>
             <a href={pathUtil.absolutePath(`categories/${category}`)}>
-              {postUtil.hasNewByCategory(category) ? (
+              {categoriesWithStatus[category].hasNew ? (
                 <span className="new">New</span>
               ) : (
                 ''
               )}
               <span className="category flex-1">{category}</span>
 
-              <span className="count">{categoriesWithCount[category]}</span>
+              <span className="count">
+                {categoriesWithStatus[category].count}
+              </span>
             </a>
           </StyledList>
         ))}

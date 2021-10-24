@@ -1,6 +1,6 @@
-import { CategoriesWithCount, TagsWithCount } from '../../utils/PostUtil'
 import { pathUtil, postUtil } from '../../utils'
 
+import { TagsWithCount } from '../../utils/PostUtil'
 import styled from 'styled-components'
 
 const StyledNav = styled.nav`
