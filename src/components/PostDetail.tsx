@@ -105,7 +105,19 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
         </StyledButton>
       </HeadContainer>
 
-      <PostDetailContentSection>
+      <PostDetailContentSection
+        onScroll={(e) => {
+          const root: HTMLDivElement | null =
+            document.querySelector<HTMLDivElement>('#__next')
+          if (!root) return
+
+          if (e.currentTarget.scrollTop > 100) {
+            root.classList.add('shrink-headroom')
+          } else {
+            root.classList.remove('shrink-headroom')
+          }
+        }}
+      >
         {content ? (
           <DrawPanel
             position="right"

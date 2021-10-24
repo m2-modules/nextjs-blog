@@ -29,6 +29,7 @@
 }
 #__next > nav {
   grid-area: nav;
+  margin: unset;
 }
 #__next > main {
   grid-area: main;
@@ -70,14 +71,19 @@
       'header nav nav'
       'main main main'
       'footer footer footer';
+    grid-template-columns: auto 1fr;
+  }
+  #__next.shrink-headroom > header > #title {
+    margin: 10px;
   }
   #__next.shrink-headroom > header > #social-link-bar {
-    position:absolute;
+    position: absolute;
     right: 0px;
+    top: 10px;
     padding: 0px 10px 0px 0px;
   }
   #__next.shrink-headroom > nav {
     display: flex;
-    margin: auto auto auto 10px;
+    margin: 10px auto 10px 10px;
   }
 }
