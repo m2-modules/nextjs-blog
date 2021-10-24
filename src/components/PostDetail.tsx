@@ -1,22 +1,43 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { pathUtil, postUtil } from '../utils'
 
-import styled from 'styled-components'
-
-import DrawPanel from '@m2-modules/draw-panel'
-import { FormatListNumbered } from '@material-ui/icons'
-
-import markdownStyles from '../assets/styles/markdown.module.css'
 import ContentIndexer from '../components/ContentIndexer/ContentIndexer'
 import ContentSection from '../components/ContentSection'
-import { layoutConfig } from '../config/layout.config'
+import DrawPanel from '@m2-modules/draw-panel'
+import { FormatListNumbered } from '@material-ui/icons'
 import { IPost } from '../config/post.config'
-import { pathUtil, postUtil } from '../utils'
 import TagSpreader from './TagSpreader'
 import Utterances from './Utterances'
+import { layoutConfig } from '../config/layout.config'
+import markdownStyles from '../assets/styles/markdown.module.css'
+import styled from 'styled-components'
 
-const ContentContainer = styled.div`
-  padding: 20px;
-  overflow: auto;
+const StyledArticle = styled.article`
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+`
+
+const HeadContainer = styled.div`
+  display: flex;
+  padding: 0px 10px;
+`
+
+const StyledHeading = styled.h1`
+  margin-bottom: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  & > .description {
+    font-size: 1rem;
+    margin-top: 10px;
+    color: #666;
+    font-weight: initial;
+    font-style: italic;
+  }
 `
 
 const StyledButton = styled.button`
@@ -37,6 +58,10 @@ const StyledImg = styled.img`
   @media only screen and (max-width: 800px) {
     height: 200px;
   }
+`
+
+const PostDetailContentSection = styled(ContentSection)`
+  padding: 0px 10px;
 `
 
 export type PostDetailProps = {
@@ -68,60 +93,77 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
   }, [post])
 
   return post ? (
-    <>
-      <StyledButton className="transparent" onClick={toggleAsidePanel}>
-        <FormatListNumbered />
-      </StyledButton>
+    <StyledArticle>
+      <HeadContainer>
+        <StyledHeading>
+          <span className="title">{post.title}</span>
+          <span className="description">{post.description}</span>
+        </StyledHeading>
 
-      <ContentContainer>
-        <ContentSection>
-          {post.thumbnailName ? (
-            <StyledImg
-              src={postUtil.getThumbnailSrc(post)}
-              alt={`${post.title}`}
-            />
-          ) : (
-            ''
-          )}
+        <StyledButton className="transparent" onClick={toggleAsidePanel}>
+          <FormatListNumbered />
+        </StyledButton>
+      </HeadContainer>
 
-          {content ? (
-            <DrawPanel
-              position="right"
-              open={asideOpen}
-              closeHandler={closeAsidePanel}
-            >
-              <ContentIndexer content={content} />
-            </DrawPanel>
-          ) : (
-            ''
-          )}
+      <PostDetailContentSection
+        onScroll={(e) => {
+          const root: HTMLDivElement | null =
+            document.querySelector<HTMLDivElement>('#__next')
+          if (!root) return
 
-          <div
-            className={markdownStyles.markdown}
-            dangerouslySetInnerHTML={{
-              __html: content || '',
-            }}
+          if (e.currentTarget.scrollTop > 100) {
+            root.classList.add('shrink-headroom')
+          } else {
+            root.classList.remove('shrink-headroom')
+          }
+        }}
+      >
+        {content ? (
+          <DrawPanel
+            position="right"
+            open={asideOpen}
+            closeHandler={closeAsidePanel}
+          >
+            <ContentIndexer content={content} />
+          </DrawPanel>
+        ) : (
+          ''
+        )}
+
+        {post.thumbnailName ? (
+          <StyledImg
+            src={postUtil.getThumbnailSrc(post)}
+            alt={`${post.title}`}
           />
+        ) : (
+          ''
+        )}
 
-          <h2>Tags</h2>
-          <TagSpreader tags={post.tags} linkBuilder={linkBuilder} />
+        <div
+          className={markdownStyles.markdown}
+          dangerouslySetInnerHTML={{
+            __html: content || '',
+          }}
+        />
 
-          {layoutConfig.postDetail?.utterances ? (
-            <>
-              <h2>Comments</h2>
-              <Utterances
-                repo={layoutConfig.postDetail.utterances.repo}
-                theme={layoutConfig.postDetail.utterances.theme}
-                issueTerm={layoutConfig.postDetail.utterances.issueTerm}
-                issueLabel={layoutConfig.postDetail.utterances.issueTerm}
-              />
-            </>
-          ) : (
-            ''
-          )}
-        </ContentSection>
-      </ContentContainer>
-    </>
+        <h2>Tags</h2>
+        <TagSpreader tags={post.tags} linkBuilder={linkBuilder} />
+
+        {layoutConfig.postDetail?.utterances ? (
+          <>
+            <h2>Comments</h2>
+            <Utterances
+              repo={layoutConfig.postDetail.utterances.repo}
+              theme={layoutConfig.postDetail.utterances.theme}
+              issueTerm={layoutConfig.postDetail.utterances.issueTerm}
+              issueLabel={layoutConfig.postDetail.utterances.issueTerm}
+            />
+          </>
+        ) : (
+          ''
+        )}
+      </PostDetailContentSection>
+    </StyledArticle>
   ) : (
     <></>
   )

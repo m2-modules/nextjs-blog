@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 
-import { PostDetailPageProps } from '../../pages/posts/[title]'
-import { blogConfig } from '../config/blog.config'
-import { layoutConfig } from '../config/layout.config'
-import menuConfigs from '../config/menu.config'
-import { IPost } from '../config/post.config'
-import { postUtil } from '../utils'
 import BlogTitle from './BlogTitle'
 import ContentIndexer from './ContentIndexer/ContentIndexer'
 import Copyright from './Copyright'
+import { IPost } from '../config/post.config'
 import NavBar from './NavBar'
+import { PostDetailPageProps } from '../../pages/posts/[title]'
 import SocialLinkBar from './SocialLinkBar'
+import { blogConfig } from '../config/blog.config'
+import { layoutConfig } from '../config/layout.config'
+import menuConfigs from '../config/menu.config'
+import { postUtil } from '../utils'
 
 export type PageLayoutProps = Partial<PostDetailPageProps> & {
   component: JSX.Element

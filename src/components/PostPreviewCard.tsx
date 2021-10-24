@@ -1,10 +1,9 @@
-import React from 'react'
-
-import styled from 'styled-components'
+import { pathUtil, postUtil } from '../utils'
 
 import { IPost } from '../config/post.config'
-import { pathUtil, postUtil } from '../utils'
+import React from 'react'
 import TagSpreader from './TagSpreader'
+import styled from 'styled-components'
 
 interface IStyledArticle {
   hasThumbnail: boolean

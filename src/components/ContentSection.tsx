@@ -5,7 +5,6 @@ const ContentSection = styled.section`
   flex: 1;
   flex-direction: column;
   max-width: 60vw;
-  overflow: hidden;
   overflow: auto;
 
   @media only screen and (max-width: 800px) {
