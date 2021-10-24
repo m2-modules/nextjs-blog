@@ -20,9 +20,8 @@ main {
 }
 
 a {
-  color: inherit;
   text-decoration: none;
-  font-size: 1rem;
+  color: unset;
 }
 
 * {
@@ -43,6 +42,18 @@ button {
 button.transparent {
   background-color: transparent;
   border: none;
+}
+
+ol ol,
+ul ol {
+  list-style-type: lower-roman;
+}
+
+ol ol ol,
+ol ul ol,
+ul ol ol,
+ul ul ol {
+  list-style-type: lower-alpha;
 }
 
 .v-flex {

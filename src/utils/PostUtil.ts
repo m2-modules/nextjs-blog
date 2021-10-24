@@ -3,8 +3,11 @@ import { IPost } from '../config/post.config'
 import marked from 'marked'
 import path from 'path'
 
-export interface CategoriesWithCount {
-  [categoryName: string]: number
+export interface CategoriesWithStatus {
+  [categoryName: string]: {
+    count: number
+    hasNew: boolean
+  }
 }
 
 export interface TagsWithCount {
@@ -117,15 +120,18 @@ export class PostUtil {
     return text.replace(/ /g, '').toLocaleLowerCase()
   }
 
-  categoriesWithCount(): CategoriesWithCount {
+  categoriesWithStatus(): CategoriesWithStatus {
     return this.getPostAll().reduce(
-      (categoriesWithCount: CategoriesWithCount, post: IPost) => {
+      (categoriesWithCount: CategoriesWithStatus, post: IPost) => {
         const category: string = post.category.replace(/-/g, ' ')
 
         if (categoriesWithCount[category]) {
-          categoriesWithCount[category]++
+          categoriesWithCount[category].count++
         } else {
-          categoriesWithCount[category] = 1
+          categoriesWithCount[category] = {
+            count: 1,
+            hasNew: this.hasNewByCategory(category),
+          }
         }
 
         return categoriesWithCount
