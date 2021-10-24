@@ -47,11 +47,13 @@ const StyledLabel = styled.label`
 `
 export interface PostListProps {
   query: string
+  category?: string
   fetchLimit: number
 }
 
 const PostList = (props: PostListProps): JSX.Element => {
   const query: string = props.query
+  const category: string | undefined = props.category
   const fetchLimit: number = props.fetchLimit
   const [scrollAdjusted, setScrollAdjusted] = useState<boolean>(false)
   const [initialPage, setInitialPage] = useState<number>(1)
@@ -64,15 +66,18 @@ const PostList = (props: PostListProps): JSX.Element => {
     const page: number = Number(searchParams.get('page') || 1)
 
     if (posts.length === 0) {
-      setPosts(postUtil.getPosts(1, page * fetchLimit, query))
+      setPosts(postUtil.getPosts(1, page * fetchLimit, query, category))
     } else if (postUtil.hasPosts(page + 1, fetchLimit)) {
       setTimeout(() => {
-        setPosts([...posts, ...postUtil.getPosts(page + 1, fetchLimit, query)])
+        setPosts([
+          ...posts,
+          ...postUtil.getPosts(page + 1, fetchLimit, query, category),
+        ])
         searchParams.set('page', String(page + 1))
         history.pushState('', '', `?${searchParams.toString()}`)
       }, 1000)
     }
-  }, [fetchLimit, posts, query])
+  }, [fetchLimit, posts, query, category])
 
   useEffect(() => {
     const searchParams: URLSearchParams = new URLSearchParams(location.search)

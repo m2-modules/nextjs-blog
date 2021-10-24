@@ -44,3 +44,14 @@ button.transparent {
   background-color: transparent;
   border: none;
 }
+
+.v-flex {
+  display: flex;
+  flex-direction: column;
+}
+.flex-1 {
+  flex: 1;
+}
+.non-overflow {
+  overflow: hidden;
+}

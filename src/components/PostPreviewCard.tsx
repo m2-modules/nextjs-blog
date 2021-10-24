@@ -10,11 +10,9 @@ interface IStyledArticle {
 }
 
 const StyledArticle = styled.article<IStyledArticle>`
-  box-shadow: 2px 2px 2px #aaa;
-  border-radius: 5px;
-  border: 1px solid #eee;
-  margin: 20px;
+  border-bottom: 1px solid #eee;
   padding: 20px;
+  min-height: 240px;
 
   display: grid;
   grid-gap: 10px;
@@ -54,7 +52,6 @@ const StyledArticle = styled.article<IStyledArticle>`
   @media only screen and (max-width: 800px) {
     & {
       grid-template-columns: 1fr auto;
-      grid-template-rows: auto auto auto 1fr auto;
       grid-template-areas: ${(props) =>
         props.hasThumbnail
           ? `
@@ -64,11 +61,9 @@ const StyledArticle = styled.article<IStyledArticle>`
         'tags tags'
       `
           : `
-        'title title'
-        'date date'
+        'title date'
+        'description description'
         'tags tags'
-        'description description'
-        'description description'
       `};
     }
     & > #date {
