@@ -1,5 +1,3 @@
-import React from 'react'
-
 import {
   GetStaticPathsResult,
   GetStaticPropsContext,
@@ -7,10 +5,11 @@ import {
   NextPage,
 } from 'next'
 import { NextRouter, useRouter } from 'next/router'
+import posts, { IPost } from '../../src/config/post.config'
 
 import CommonHead from '../../src/components/CommonHead'
 import PostDetail from '../../src/components/PostDetail'
-import posts, { IPost } from '../../src/config/post.config'
+import React from 'react'
 import { postUtil } from '../../src/utils'
 
 export type PostDetailPageProps = {

@@ -1,11 +1,10 @@
-import React from 'react'
+import { IBlogConfig, blogConfig } from '../config/blog.config'
+import { NextRouter, useRouter } from 'next/router'
+import menuConfigs, { IMenuConfig } from '../config/menu.config'
 
 import Head from 'next/head'
-import { NextRouter, useRouter } from 'next/router'
-
-import { blogConfig, IBlogConfig } from '../config/blog.config'
+import React from 'react'
 import { gaConfig } from '../config/ga.config'
-import menuConfigs, { IMenuConfig } from '../config/menu.config'
 import { pathUtil } from '../utils'
 
 export type CommonHeadProps = {
@@ -73,7 +72,10 @@ const CommonHead = (props: CommonHeadProps): JSX.Element => {
 
       <link rel="canonical" href={pathUtil.absolutePath(router.asPath)} />
 
+      <meta property="og:type" content="website" />
       <meta property="og:title" content={title} />
+      <meta property="og:site_name" content={blogConfig.title} />
+      <meta property="og:url" content={pathUtil.absolutePath(router.asPath)} />
 
       {imageURL ? <meta property="og:image" content={imageURL} /> : ''}
       {description ? (

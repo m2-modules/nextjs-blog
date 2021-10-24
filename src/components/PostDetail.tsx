@@ -1,26 +1,29 @@
 import React, { useCallback, useEffect, useState } from 'react'
+import { pathUtil, postUtil } from '../utils'
 
-import styled from 'styled-components'
-
-import DrawPanel from '@m2-modules/draw-panel'
-import { FormatListNumbered } from '@material-ui/icons'
-
-import markdownStyles from '../assets/styles/markdown.module.css'
 import ContentIndexer from '../components/ContentIndexer/ContentIndexer'
 import ContentSection from '../components/ContentSection'
-import { layoutConfig } from '../config/layout.config'
+import DrawPanel from '@m2-modules/draw-panel'
+import { FormatListNumbered } from '@material-ui/icons'
 import { IPost } from '../config/post.config'
-import { pathUtil, postUtil } from '../utils'
 import TagSpreader from './TagSpreader'
 import Utterances from './Utterances'
+import { layoutConfig } from '../config/layout.config'
+import markdownStyles from '../assets/styles/markdown.module.css'
+import styled from 'styled-components'
+
+const StyledArticle = styled.article`
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+`
 
 const HeadContainer = styled.div`
   display: flex;
-  flex: 1;
+  padding: 0px 10px;
 `
 
 const StyledHeading = styled.h1`
-  padding: 0px 20px;
   margin-bottom: 10px;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -35,11 +38,6 @@ const StyledHeading = styled.h1`
     font-weight: initial;
     font-style: italic;
   }
-`
-
-const ContentContainer = styled.div`
-  padding: 20px;
-  overflow: auto;
 `
 
 const StyledButton = styled.button`
@@ -62,14 +60,16 @@ const StyledImg = styled.img`
   }
 `
 
+const PostDetailContentSection = styled(ContentSection)`
+  padding: 0px 10px;
+`
+
 export type PostDetailProps = {
   post: IPost
-  scrollHandler: () => void
 }
 
 const PostDetail = (props: PostDetailProps): JSX.Element => {
   const post: IPost = props.post
-  const scrollHandler: () => void = props.scrollHandler
   const [asideOpen, setAsideOpen] = useState<boolean>(false)
   const [content, setContent] = useState<string | null>(null)
 
@@ -93,7 +93,7 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
   }, [post])
 
   return post ? (
-    <>
+    <StyledArticle>
       <HeadContainer>
         <StyledHeading>
           <span className="title">{post.title}</span>
@@ -105,55 +105,53 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
         </StyledButton>
       </HeadContainer>
 
-      <ContentContainer onScroll={scrollHandler}>
-        <ContentSection>
-          {post.thumbnailName ? (
-            <StyledImg
-              src={postUtil.getThumbnailSrc(post)}
-              alt={`${post.title}`}
-            />
-          ) : (
-            ''
-          )}
+      <PostDetailContentSection>
+        {content ? (
+          <DrawPanel
+            position="right"
+            open={asideOpen}
+            closeHandler={closeAsidePanel}
+          >
+            <ContentIndexer content={content} />
+          </DrawPanel>
+        ) : (
+          ''
+        )}
 
-          {content ? (
-            <DrawPanel
-              position="right"
-              open={asideOpen}
-              closeHandler={closeAsidePanel}
-            >
-              <ContentIndexer content={content} />
-            </DrawPanel>
-          ) : (
-            ''
-          )}
-
-          <div
-            className={markdownStyles.markdown}
-            dangerouslySetInnerHTML={{
-              __html: content || '',
-            }}
+        {post.thumbnailName ? (
+          <StyledImg
+            src={postUtil.getThumbnailSrc(post)}
+            alt={`${post.title}`}
           />
+        ) : (
+          ''
+        )}
 
-          <h2>Tags</h2>
-          <TagSpreader tags={post.tags} linkBuilder={linkBuilder} />
+        <div
+          className={markdownStyles.markdown}
+          dangerouslySetInnerHTML={{
+            __html: content || '',
+          }}
+        />
 
-          {layoutConfig.postDetail?.utterances ? (
-            <>
-              <h2>Comments</h2>
-              <Utterances
-                repo={layoutConfig.postDetail.utterances.repo}
-                theme={layoutConfig.postDetail.utterances.theme}
-                issueTerm={layoutConfig.postDetail.utterances.issueTerm}
-                issueLabel={layoutConfig.postDetail.utterances.issueTerm}
-              />
-            </>
-          ) : (
-            ''
-          )}
-        </ContentSection>
-      </ContentContainer>
-    </>
+        <h2>Tags</h2>
+        <TagSpreader tags={post.tags} linkBuilder={linkBuilder} />
+
+        {layoutConfig.postDetail?.utterances ? (
+          <>
+            <h2>Comments</h2>
+            <Utterances
+              repo={layoutConfig.postDetail.utterances.repo}
+              theme={layoutConfig.postDetail.utterances.theme}
+              issueTerm={layoutConfig.postDetail.utterances.issueTerm}
+              issueLabel={layoutConfig.postDetail.utterances.issueTerm}
+            />
+          </>
+        ) : (
+          ''
+        )}
+      </PostDetailContentSection>
+    </StyledArticle>
   ) : (
     <></>
   )
