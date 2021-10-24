@@ -66,3 +66,6 @@ ul ul ol {
 .non-overflow {
   overflow: hidden;
 }
+.hidden {
+  display: none;
+}
