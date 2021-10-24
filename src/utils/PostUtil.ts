@@ -1,7 +1,15 @@
+import { DateUtil } from './DateUtil'
 import { IPost } from '../config/post.config'
 import marked from 'marked'
 import path from 'path'
 
+export interface CategoriesWithCount {
+  [categoryName: string]: number
+}
+
+export interface TagsWithCount {
+  [tagName: string]: number
+}
 export class PostUtil {
   private readonly posts: IPost[]
   private readonly publishedPosts: IPost[]
@@ -18,10 +26,18 @@ export class PostUtil {
     this.rootPath = rootPath
   }
 
-  getPosts(page: number, limit = 10, query?: string | null): IPost[] {
-    const offset: number = (page - 1) * limit
-
+  getPosts(
+    page: number,
+    limit = 10,
+    query?: string | null,
+    category?: string
+  ): IPost[] {
     let posts: IPost[] = this.getPostAll()
+    if (category)
+      posts = posts.filter(
+        (post: IPost) => post.category.replace(/-/g, ' ') === category
+      )
+
     if (query) {
       const generalizedQuery: string = this.generalize(query)
       posts = posts.filter(
@@ -29,7 +45,12 @@ export class PostUtil {
       )
     }
 
-    return posts.slice(offset, offset + limit)
+    if (limit === 0) {
+      return posts
+    } else {
+      const offset: number = (page - 1) * limit
+      return posts.slice(offset, offset + limit)
+    }
   }
 
   getPostAll(): IPost[] {
@@ -45,8 +66,13 @@ export class PostUtil {
     return found
   }
 
-  hasPosts(page: number, limit?: number, query?: string | null): boolean {
-    return Boolean(this.getPosts(page, limit, query).length)
+  hasPosts(
+    page: number,
+    limit?: number,
+    query?: string | null,
+    category?: string
+  ): boolean {
+    return Boolean(this.getPosts(page, limit, query, category).length)
   }
 
   getThumbnailSrc(post: IPost): string {
@@ -89,5 +115,56 @@ export class PostUtil {
 
   generalize(text: string): string {
     return text.replace(/ /g, '').toLocaleLowerCase()
+  }
+
+  categoriesWithCount(): CategoriesWithCount {
+    return this.getPostAll().reduce(
+      (categoriesWithCount: CategoriesWithCount, post: IPost) => {
+        const category: string = post.category.replace(/-/g, ' ')
+
+        if (categoriesWithCount[category]) {
+          categoriesWithCount[category]++
+        } else {
+          categoriesWithCount[category] = 1
+        }
+
+        return categoriesWithCount
+      },
+      {}
+    )
+  }
+
+  tagsWithCount(): TagsWithCount {
+    return this.getPostAll().reduce(
+      (tagsWithCount: TagsWithCount, post: IPost) => {
+        const tags: string[] = post.tags
+
+        tags.forEach((tag: string) => {
+          if (tagsWithCount[tag]) {
+            tagsWithCount[tag]++
+          } else {
+            tagsWithCount[tag] = 1
+          }
+        })
+
+        return tagsWithCount
+      },
+      {}
+    )
+  }
+
+  getCountByCategory(category: string): number {
+    return (
+      this.getPostAll().filter(
+        (post: IPost) => post.category.replace(/-/g, ' ') === category
+      ).length || 0
+    )
+  }
+
+  hasNewByCategory(category: string): boolean {
+    return this.getPosts(1, 0, null, category).some((post: IPost) => {
+      const aWeekAgo: Date = DateUtil.daysBefore(7)
+      return new Date(post.publishedAt) >= aWeekAgo
+    })
   }
 }

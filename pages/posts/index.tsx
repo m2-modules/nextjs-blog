@@ -3,6 +3,7 @@ import { pathUtil, postUtil } from '../../src/utils'
 
 import CommonHead from '../../src/components/CommonHead'
 import { NextPage } from 'next'
+import PageHeading from '../../src/components/PageHeading'
 import PostList from '../../src/components/PostList'
 import React from 'react'
 
@@ -44,6 +45,12 @@ const PostListPage: NextPage = (): JSX.Element => {
           </>
         }
       />
+
+      <PageHeading
+        title="Post"
+        subMessage={` (${postUtil.getPostAll().length})`}
+      />
+
       <PostList fetchLimit={limit} query={query || ''} />
     </>
   )
