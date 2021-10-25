@@ -1,14 +1,17 @@
+import React from 'react'
+
+import styled from 'styled-components'
+
+import SlideCard from '@m2-modules/slide-card'
+
+import { blogConfig } from '../config/blog.config'
+import { IPost } from '../config/post.config'
+import { postUtil } from '../utils'
 import CategoryIndexer from './CategoryIndexer/CategoryIndexer'
 import ContentSection from './ContentSection'
-import { IPost } from '../config/post.config'
 import PageHeading from './PageHeading'
 import PostPreviewCard from './PostPreviewCard'
-import React from 'react'
-import SlideCard from '@m2-modules/slide-card'
 import TagIndexer from './TagIndexer/TagIndexer'
-import { blogConfig } from '../config/blog.config'
-import { postUtil } from '../utils'
-import styled from 'styled-components'
 
 const StyledSection = styled(ContentSection)`
   flex: 1;
@@ -16,12 +19,12 @@ const StyledSection = styled(ContentSection)`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto 1fr;
-  grid-template-areas: 'latest latest' 'category tag';
+  grid-template-areas: 'recent recent' 'category tag';
   grid-gap: 10px;
   overflow: auto;
 
-  & #latest-posts {
-    grid-area: latest;
+  & #recent-posts {
+    grid-area: recent;
     width: 60vw;
 
     & > h2 {
@@ -50,26 +53,26 @@ const StyledSection = styled(ContentSection)`
 
   @media only screen and (max-width: 800px) {
     grid-template-columns: 1fr;
-    grid-template-areas: 'latest' 'category' 'tag';
+    grid-template-areas: 'recent' 'category' 'tag';
 
-    & #latest-posts {
+    & #recent-posts {
       width: 100vw;
     }
   }
 `
 
 const HomePage = (): JSX.Element => {
-  const latestPosts: IPost[] = postUtil.getPosts(1, 5)
+  const recentPosts: IPost[] = postUtil.getPosts(1, 5)
 
   return (
     <article className="v-flex flex-1 non-overflow">
       <PageHeading id="title" title={blogConfig.title} />
 
       <StyledSection>
-        <article id="latest-posts">
-          <h2>Latest</h2>
+        <article id="recent-posts">
+          <h2>Recent posts</h2>
           <SlideCard width={'inherit'} height={'inherit'} indicator={false}>
-            {latestPosts.map((post: IPost) => (
+            {recentPosts.map((post: IPost) => (
               <PostPreviewCard key={post.title} post={post} />
             ))}
           </SlideCard>
