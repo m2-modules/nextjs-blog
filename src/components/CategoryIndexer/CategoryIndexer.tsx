@@ -6,11 +6,15 @@ import styled from 'styled-components'
 const StyledNav = styled.nav`
   border-top: 1px solid #eee;
   flex: 1;
+
+  & ul {
+    margin: 0px;
+  }
 `
 
 const StyledList = styled.li`
   padding: 10px;
-  margin: 10px;
+  margin: 0px 10px;
   text-transform: capitalize;
   list-style: none;
   border-bottom: 1px solid #eee;
@@ -42,16 +46,6 @@ const StyledList = styled.li`
     background-color: #666;
     font-size: 0.9rem;
     color: #eee;
-  }
-
-  &:nth-child(even) {
-    color: white;
-    background-color: #666;
-
-    & .count {
-      color: #666;
-      background-color: #eee;
-    }
   }
 `
 

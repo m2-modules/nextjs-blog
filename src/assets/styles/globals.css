@@ -69,3 +69,6 @@ ul ul ol {
 .hidden {
   display: none;
 }
+.auto-margin {
+  margin: auto;
+}

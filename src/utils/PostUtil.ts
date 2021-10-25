@@ -169,7 +169,7 @@ export class PostUtil {
 
   hasNewByCategory(category: string): boolean {
     return this.getPosts(1, 0, null, category).some((post: IPost) => {
-      const aWeekAgo: Date = DateUtil.daysBefore(7)
+      const aWeekAgo: Date = DateUtil.daysBefore(3)
       return new Date(post.publishedAt) >= aWeekAgo
     })
   }

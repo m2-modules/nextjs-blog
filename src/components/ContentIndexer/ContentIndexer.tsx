@@ -7,6 +7,10 @@ const StyledOList = styled.ol`
   padding: 0px 40px;
 `
 
+const StyledAnchor = styled.a`
+  color: #0366d6;
+`
+
 export type ContentIndexerProps = {
   content: string
 }
@@ -24,19 +28,23 @@ const ContentIndexer = (props: ContentIndexerProps): JSX.Element => {
     <StyledOList>
       {headings.map((depth1: Heading, idx: number) => (
         <li key={`depth-1-${idx}`}>
-          <a href={`#${depth1.id}`}>{depth1.text}</a>
+          <StyledAnchor href={`#${depth1.id}`}>{depth1.text}</StyledAnchor>
 
           {depth1.hasChild() ? (
             <ol>
               {depth1.children.map((depth2: Heading, idx: number) => (
                 <li key={`depth-2-${idx}`}>
-                  <a href={`#${depth2.id}`}>{depth2.text}</a>
+                  <StyledAnchor href={`#${depth2.id}`}>
+                    {depth2.text}
+                  </StyledAnchor>
 
                   {depth2.hasChild() ? (
                     <ol>
                       {depth2.children.map((depth3: Heading, idx: number) => (
                         <li key={`depth-3-${idx}`}>
-                          <a href={`#${depth3.id}`}>{depth3.text}</a>
+                          <StyledAnchor href={`#${depth3.id}`}>
+                            {depth3.text}
+                          </StyledAnchor>
                         </li>
                       ))}
                     </ol>
