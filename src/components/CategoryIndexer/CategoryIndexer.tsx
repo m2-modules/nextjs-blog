@@ -6,6 +6,10 @@ import styled from 'styled-components'
 const StyledNav = styled.nav`
   border-top: 1px solid #eee;
   flex: 1;
+
+  & ul {
+    margin: 0px;
+  }
 `
 
 const StyledList = styled.li`
