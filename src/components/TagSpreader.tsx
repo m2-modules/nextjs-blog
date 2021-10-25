@@ -1,5 +1,4 @@
 import React from 'react'
-
 import styled from 'styled-components'
 
 export interface TagSpreaderProps {
@@ -16,7 +15,7 @@ const StyledTagSpreaderList = styled.ul`
     display: inline-block;
     border-radius: 10px;
     background-color: #333;
-    padding: 7px;
+    padding: 5px 10px;
     margin: 5px;
     white-space: nowrap;
   }
