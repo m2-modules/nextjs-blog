@@ -80,7 +80,9 @@ const posts: IPost[] = [
     category: 'category-1',
     published: true,
     publishedAt: '2021-01-01',
-    tags: ['sample'],
+    tags: Array(50)
+      .fill('')
+      .map((_, idx) => `Sample ${idx + 1}`),
   },
   {
     title: `Sample title 1-9`,
@@ -89,7 +91,7 @@ const posts: IPost[] = [
     category: 'category-1',
     published: true,
     publishedAt: '2021-01-01',
-    tags: ['sample'],
+    tags: ['sample', 'Sample 2'],
   },
   {
     title: `Sample title 1-10`,
@@ -179,7 +181,7 @@ const posts: IPost[] = [
     category: 'category-1',
     published: true,
     publishedAt: '2021-01-01',
-    tags: ['sample'],
+    tags: ['sample', 'Sample 2'],
   },
   {
     title: `Sample title 1-20`,

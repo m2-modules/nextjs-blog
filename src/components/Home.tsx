@@ -1,15 +1,14 @@
-import React from 'react'
+import React, { RefObject, useRef } from 'react'
 
 import styled from 'styled-components'
 
 import SlideCard from '@m2-modules/slide-card'
 
-import { blogConfig } from '../config/blog.config'
 import { IPost } from '../config/post.config'
-import { postUtil } from '../utils'
+import useHeadroomShrink from '../hooks/use-headroom-shrink'
+import { pathUtil, postUtil } from '../utils'
 import CategoryIndexer from './CategoryIndexer/CategoryIndexer'
 import ContentSection from './ContentSection'
-import PageHeading from './PageHeading'
 import PostPreviewCard from './PostPreviewCard'
 import TagIndexer from './TagIndexer/TagIndexer'
 
@@ -49,6 +48,13 @@ const StyledSection = styled(ContentSection)`
       font-size: 1rem;
       margin: 10px 20px;
     }
+
+    & .more-tags {
+      float: right;
+      color: #666;
+      font-size: 0.8rem;
+      font-weight: lighter;
+    }
   }
 
   @media only screen and (max-width: 800px) {
@@ -61,35 +67,38 @@ const StyledSection = styled(ContentSection)`
   }
 `
 
-const HomePage = (): JSX.Element => {
+const Home = (): JSX.Element => {
+  const containerRef: RefObject<HTMLElement> = useRef<HTMLElement>(null)
+  useHeadroomShrink(containerRef)
   const recentPosts: IPost[] = postUtil.getPosts(1, 5)
 
   return (
-    <article className="v-flex flex-1 non-overflow">
-      <PageHeading id="title" title={blogConfig.title} />
+    <StyledSection ref={containerRef}>
+      <article id="recent-posts">
+        <h2>Recent posts</h2>
+        <SlideCard width={'inherit'} height={'inherit'} indicator={false}>
+          {recentPosts.map((post: IPost) => (
+            <PostPreviewCard key={post.title} post={post} />
+          ))}
+        </SlideCard>
+      </article>
 
-      <StyledSection>
-        <article id="recent-posts">
-          <h2>Recent posts</h2>
-          <SlideCard width={'inherit'} height={'inherit'} indicator={false}>
-            {recentPosts.map((post: IPost) => (
-              <PostPreviewCard key={post.title} post={post} />
-            ))}
-          </SlideCard>
-        </article>
+      <article id="category-indexer" className="v-flex flex-1">
+        <h2>Categories</h2>
+        <CategoryIndexer />
+      </article>
 
-        <article id="category-indexer" className="v-flex flex-1">
-          <h2>Categories</h2>
-          <CategoryIndexer />
-        </article>
-
-        <article id="tag-indexer" className="v-flex flex-1">
-          <h2>Tags</h2>
-          <TagIndexer />
-        </article>
-      </StyledSection>
-    </article>
+      <article id="tag-indexer" className="v-flex flex-1">
+        <h2>
+          Tags
+          <a className="more-tags" href={pathUtil.absolutePath('/tags')}>
+            See more
+          </a>
+        </h2>
+        <TagIndexer />
+      </article>
+    </StyledSection>
   )
 }
 
-export default HomePage
+export default Home
