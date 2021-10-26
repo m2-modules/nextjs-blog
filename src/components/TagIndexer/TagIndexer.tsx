@@ -1,7 +1,7 @@
-import { pathUtil, postUtil } from '../../utils'
-
-import { TagsWithCount } from '../../utils/PostUtil'
 import styled from 'styled-components'
+
+import { pathUtil, postUtil } from '../../utils'
+import { TagsWithCount } from '../../utils/PostUtil'
 
 const StyledNav = styled.nav`
   border-top: 1px solid #eee;
@@ -30,10 +30,33 @@ const StyledUl = styled.ul`
   }
 `
 
-export interface TagIndexerProps extends React.HTMLProps<HTMLElement> {}
+export interface TagIndexerProps extends React.HTMLProps<HTMLElement> {
+  sortHandler?: (tagsWithCount: TagsWithCount) => TagsWithCount
+}
+
+function defaultSortHandler(tagsWithCount: TagsWithCount): TagsWithCount {
+  const limit: number = 10
+  let tagCountList: [string, number][] = Object.keys(tagsWithCount).map(
+    (tagName: string) => [tagName, tagsWithCount[tagName]]
+  )
+  tagCountList.sort(([_tagNameA, countA], [_tagNameB, countB]) =>
+    countA > countB ? -1 : countA < countB ? 1 : 0
+  )
+  tagCountList = tagCountList.slice(0, limit)
+
+  return tagCountList.reduce(
+    (tagsWithCount: TagsWithCount, [tagName, count]: [string, number]) => {
+      tagsWithCount[tagName] = count
+      return tagsWithCount
+    },
+    {}
+  )
+}
 
 const TagIndexer = (props: TagIndexerProps): JSX.Element => {
-  const tagsWithCount: TagsWithCount = postUtil.tagsWithCount()
+  const sortHandler: (tagsWithCount: TagsWithCount) => TagsWithCount =
+    props.sortHandler || defaultSortHandler
+  const tagsWithCount: TagsWithCount = sortHandler(postUtil.tagsWithCount())
 
   return (
     <StyledNav>

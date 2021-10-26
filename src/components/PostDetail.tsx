@@ -1,16 +1,25 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { pathUtil, postUtil } from '../utils'
+import React, {
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 
-import ContentIndexer from '../components/ContentIndexer/ContentIndexer'
-import ContentSection from '../components/ContentSection'
+import styled from 'styled-components'
+
 import DrawPanel from '@m2-modules/draw-panel'
 import { FormatListNumbered } from '@material-ui/icons'
+
+import markdownStyles from '../assets/styles/markdown.module.css'
+import ContentIndexer from '../components/ContentIndexer/ContentIndexer'
+import ContentSection from '../components/ContentSection'
+import { layoutConfig } from '../config/layout.config'
 import { IPost } from '../config/post.config'
+import useHeadroomShrink from '../hooks/use-headroom-shrink'
+import { postUtil } from '../utils'
 import TagSpreader from './TagSpreader'
 import Utterances from './Utterances'
-import { layoutConfig } from '../config/layout.config'
-import markdownStyles from '../assets/styles/markdown.module.css'
-import styled from 'styled-components'
 
 const StyledArticle = styled.article`
   display: flex;
@@ -73,13 +82,6 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
   const [asideOpen, setAsideOpen] = useState<boolean>(false)
   const [content, setContent] = useState<string | null>(null)
 
-  const linkBuilder: (tag: string) => string = (tag: string): string => {
-    const searchParams: URLSearchParams = new URLSearchParams()
-    searchParams.append('query', tag)
-
-    return pathUtil.absolutePath(`posts?${searchParams.toString()}`)
-  }
-
   const toggleAsidePanel = useCallback(() => {
     setAsideOpen(!asideOpen)
   }, [asideOpen])
@@ -91,6 +93,9 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
   useEffect(() => {
     postUtil.getContent(post).then(setContent)
   }, [post])
+
+  const containerRef: RefObject<HTMLElement> = useRef<HTMLElement>(null)
+  useHeadroomShrink(containerRef)
 
   return post ? (
     <StyledArticle>
@@ -105,19 +110,7 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
         </StyledButton>
       </HeadContainer>
 
-      <PostDetailContentSection
-        onScroll={(e) => {
-          const root: HTMLDivElement | null =
-            document.querySelector<HTMLDivElement>('#__next')
-          if (!root) return
-
-          if (e.currentTarget.scrollTop > 100) {
-            root.classList.add('shrink-headroom')
-          } else {
-            root.classList.remove('shrink-headroom')
-          }
-        }}
-      >
+      <PostDetailContentSection ref={containerRef}>
         {content ? (
           <DrawPanel
             position="right"
@@ -147,7 +140,7 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
         />
 
         <h2>Tags</h2>
-        <TagSpreader tags={post.tags} linkBuilder={linkBuilder} />
+        <TagSpreader tags={post.tags} />
 
         {layoutConfig.postDetail?.utterances ? (
           <>

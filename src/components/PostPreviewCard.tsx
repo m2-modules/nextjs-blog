@@ -1,9 +1,10 @@
-import { pathUtil, postUtil } from '../utils'
+import React from 'react'
+
+import styled from 'styled-components'
 
 import { IPost } from '../config/post.config'
-import React from 'react'
+import { pathUtil, postUtil } from '../utils'
 import TagSpreader from './TagSpreader'
-import styled from 'styled-components'
 
 interface IStyledArticle {
   hasThumbnail: boolean
@@ -93,20 +94,13 @@ export interface PostPreviewCardProps extends React.HTMLProps<HTMLElement> {
 const PostPreviewCard = (props: PostPreviewCardProps): JSX.Element => {
   const post: IPost = props.post
 
-  const linkBuilder: (tag: string) => string = (tag: string): string => {
-    const searchParams: URLSearchParams = new URLSearchParams()
-    searchParams.append('query', tag)
-
-    return pathUtil.absolutePath(`posts?${searchParams.toString()}`)
-  }
-
   return (
     <StyledArticle hasThumbnail={Boolean(post.thumbnailName)}>
       <a href={pathUtil.absolutePath(`/posts/${postUtil.dashedTitle(post)}`)}>
         <h2 id="title">{post.title}</h2>
       </a>
       <p id="date">{new Date(post.publishedAt).toLocaleDateString()}</p>
-      <TagSpreader tags={post.tags} linkBuilder={linkBuilder} />
+      <TagSpreader tags={post.tags} />
       {post.thumbnailName ? (
         <StyledImg
           id="thumbnail"
