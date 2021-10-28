@@ -1,10 +1,4 @@
-import React, {
-  RefObject,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import React, { RefObject, useCallback, useRef, useState } from 'react'
 
 import styled from 'styled-components'
 
@@ -75,12 +69,13 @@ const PostDetailContentSection = styled(ContentSection)`
 
 export type PostDetailProps = {
   post: IPost
+  content: string
 }
 
 const PostDetail = (props: PostDetailProps): JSX.Element => {
   const post: IPost = props.post
+  const content: string = props.content
   const [asideOpen, setAsideOpen] = useState<boolean>(false)
-  const [content, setContent] = useState<string | null>(null)
 
   const toggleAsidePanel = useCallback(() => {
     setAsideOpen(!asideOpen)
@@ -90,14 +85,10 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
     setAsideOpen(false)
   }, [])
 
-  useEffect(() => {
-    postUtil.getContent(post).then(setContent)
-  }, [post])
-
   const containerRef: RefObject<HTMLElement> = useRef<HTMLElement>(null)
   useHeadroomShrink(containerRef)
 
-  return post ? (
+  return (
     <StyledArticle>
       <HeadContainer>
         <StyledHeading>
@@ -111,17 +102,13 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
       </HeadContainer>
 
       <PostDetailContentSection ref={containerRef}>
-        {content ? (
-          <DrawPanel
-            position="right"
-            open={asideOpen}
-            closeHandler={closeAsidePanel}
-          >
-            <ContentIndexer content={content} />
-          </DrawPanel>
-        ) : (
-          ''
-        )}
+        <DrawPanel
+          position="right"
+          open={asideOpen}
+          closeHandler={closeAsidePanel}
+        >
+          <ContentIndexer content={content} />
+        </DrawPanel>
 
         {post.thumbnailName ? (
           <StyledImg
@@ -157,8 +144,6 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
         )}
       </PostDetailContentSection>
     </StyledArticle>
-  ) : (
-    <></>
   )
 }
 

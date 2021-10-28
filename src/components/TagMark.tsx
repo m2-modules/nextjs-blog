@@ -20,12 +20,13 @@ const StyledList = styled.li`
     content: '#';
     color: white;
     font-size: 0.8rem;
+    margin: auto;
   }
   & span.count {
     color: #eee;
     font-style: italic;
     font-size: 0.5rem;
-    margin-left: 5px;
+    margin: auto 0px auto 5px;
   }
 `
 
