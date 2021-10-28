@@ -1,66 +1,45 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
-import BlogTitle from './BlogTitle'
-import ContentIndexer from './ContentIndexer/ContentIndexer'
-import Copyright from './Copyright'
-import { IPost } from '../config/post.config'
-import NavBar from './NavBar'
 import { PostDetailPageProps } from '../../pages/posts/[title]'
-import SocialLinkBar from './SocialLinkBar'
 import { blogConfig } from '../config/blog.config'
 import { layoutConfig } from '../config/layout.config'
 import menuConfigs from '../config/menu.config'
-import { postUtil } from '../utils'
+import BlogTitle from './BlogTitle'
+import ContentIndexer from './ContentIndexer/ContentIndexer'
+import Copyright from './Copyright'
+import NavBar from './NavBar'
+import SocialLinkBar from './SocialLinkBar'
 
 export type PageLayoutProps = Partial<PostDetailPageProps> & {
   component: JSX.Element
 }
 
-const PageLayout = (props: PageLayoutProps): JSX.Element => {
-  const component: JSX.Element = props.component
-  const postTitle: string | undefined = props.postTitle
+const PageLayout = ({ component, content }: PageLayoutProps): JSX.Element => (
+  <>
+    <header>
+      <BlogTitle />
+      {blogConfig.socials ? <SocialLinkBar socials={blogConfig.socials} /> : ''}
+    </header>
 
-  const [content, setContent] = useState<string | null>(null)
+    <nav>
+      <NavBar menus={menuConfigs} />
+    </nav>
 
-  useEffect(() => {
-    if (!postTitle) return setContent(null)
+    <main>{component}</main>
 
-    const post: IPost = postUtil.getPostByTitle(postTitle)
-    postUtil.getContent(post).then(setContent)
-  }, [postTitle])
+    <aside>{content ? <ContentIndexer content={content} /> : ''}</aside>
 
-  return (
-    <>
-      <header>
-        <BlogTitle />
-
-        {blogConfig.socials ? (
-          <SocialLinkBar socials={blogConfig.socials} />
-        ) : (
-          ''
-        )}
-      </header>
-
-      <nav>
-        <NavBar menus={menuConfigs} />
-      </nav>
-
-      <main>{component}</main>
-
-      <aside>{content ? <ContentIndexer content={content} /> : ''}</aside>
-
-      <footer>
-        {layoutConfig.footer?.copyright ? (
-          <Copyright
-            message={layoutConfig.footer.copyright.message}
-            align={layoutConfig.footer.copyright.align}
-          />
-        ) : (
-          ''
-        )}
-      </footer>
-    </>
-  )
-}
+    <footer>
+      {layoutConfig.footer?.copyright ? (
+        <Copyright
+          message={layoutConfig.footer.copyright.message}
+          align={layoutConfig.footer.copyright.align}
+        />
+      ) : (
+        ''
+      )}
+    </footer>
+  </>
+)
 
 export default PageLayout
