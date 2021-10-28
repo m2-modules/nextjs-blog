@@ -118,13 +118,13 @@ const TagList = (): JSX.Element => {
           {korStandards.map((stdChar: string) => {
             if (Object.keys(tagMap.get(stdChar) || {}).length) {
               return (
-                <a href={`#${stdChar}`}>
+                <a key={stdChar} href={`#${stdChar}`}>
                   <span className="link-item active-link">{stdChar}</span>
                 </a>
               )
             } else {
               return (
-                <span className="link-item non-active-link" key={stdChar}>
+                <span key={stdChar} className="link-item non-active-link">
                   {stdChar}
                 </span>
               )
