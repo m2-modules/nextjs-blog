@@ -1,11 +1,10 @@
-import React from 'react'
-
-import styled from 'styled-components'
-
-import { IPost } from '../config/post.config'
 import { pathUtil, postUtil } from '../utils'
+
 import { DateUtil } from '../utils/DateUtil'
+import { IPost } from '../config/post.config'
+import React from 'react'
 import TagSpreader from './TagSpreader'
+import styled from 'styled-components'
 
 interface IStyledAnchor {
   hasThumbnail: boolean
@@ -21,13 +20,13 @@ const StyledAnchor = styled.a<IStyledAnchor>`
   grid-template-areas: ${(props) =>
     props.hasThumbnail
       ? `
-      'thumbnail title title date'
-      'thumbnail description description description'
-    `
+        'thumbnail title title date'
+        'thumbnail description description description'
+      `
       : `
-      'title title title date'
-      'description description description description'
-    `};
+        'title title title date'
+        'description description description description'
+      `};
 
   & #title {
     grid-area: title;
@@ -52,16 +51,15 @@ const StyledAnchor = styled.a<IStyledAnchor>`
       grid-template-areas: ${(props) =>
         props.hasThumbnail
           ? `
-        'thumbnail thumbnail'
-        'title date'
-        'description description'
-        'tags tags'
-      `
+            '. date'
+            'thumbnail thumbnail'
+            'title title'
+            'description description'
+          `
           : `
-        'title date'
-        'description description'
-        'tags tags'
-      `};
+            'title date'
+            'description description'
+          `};
     }
     & #date {
       grid-area: date;
