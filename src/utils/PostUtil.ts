@@ -1,6 +1,7 @@
 import marked from 'marked'
 import path from 'path'
 
+import { blogConfig } from '../config/blog.config'
 import { IPost } from '../config/post.config'
 import { DateUtil } from './DateUtil'
 
@@ -96,7 +97,7 @@ export class PostUtil {
   }
 
   private buildContentPath(post: IPost): string {
-    const url: URL = new URL(window.origin)
+    const url: URL = new URL(blogConfig.siteURL)
     url.pathname = path.join(this.rootPath, post.category, post.fileName)
     return url.href
   }

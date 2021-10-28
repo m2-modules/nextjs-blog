@@ -1,11 +1,12 @@
+import React from 'react'
+
+import { NextPage } from 'next'
 import { NextRouter, useRouter } from 'next/router'
-import { pathUtil, postUtil } from '../../src/utils'
 
 import CommonHead from '../../src/components/CommonHead'
-import { NextPage } from 'next'
 import PageHeading from '../../src/components/PageHeading'
 import PostList from '../../src/components/PostList'
-import React from 'react'
+import { pathUtil, postUtil } from '../../src/utils'
 
 const PostListPage: NextPage = (): JSX.Element => {
   const router: NextRouter = useRouter()

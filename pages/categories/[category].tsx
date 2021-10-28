@@ -1,32 +1,31 @@
-import {
-  GetStaticPathsResult,
-  GetStaticPropsContext,
-  GetStaticPropsResult,
-  NextPage,
-} from 'next'
+import React from 'react'
+
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { NextRouter, useRouter } from 'next/router'
-import { pathUtil, postUtil } from '../../src/utils'
 
 import CommonHead from '../../src/components/CommonHead'
 import PageHeading from '../../src/components/PageHeading'
 import PostList from '../../src/components/PostList'
-import React from 'react'
-import styled from 'styled-components'
+import { pathUtil, postUtil } from '../../src/utils'
 
 export type PostListByCategoryPageProps = {
   category: string
 }
 
-export async function getStaticProps(
-  context: GetStaticPropsContext
-): Promise<GetStaticPropsResult<PostListByCategoryPageProps>> {
-  const category = context.params?.category as string
-  return {
-    props: { category },
+export const getStaticProps: GetStaticProps = async (context) => {
+  const category: string = context.params?.category as string
+  if (postUtil.getCountByCategory(category) <= 0) {
+    return {
+      notFound: true,
+    }
+  } else {
+    return {
+      props: { category },
+    }
   }
 }
 
-export async function getStaticPaths(): Promise<GetStaticPathsResult> {
+export const getStaticPaths: GetStaticPaths = async () => {
   const categories: string[] = Object.keys(postUtil.categoriesWithStatus())
   return {
     paths: categories.map((category: string) => ({
@@ -36,14 +35,15 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
   }
 }
 
-const PostListByCategoryPage: NextPage = (): JSX.Element => {
+const PostListByCategoryPage: NextPage<PostListByCategoryPageProps> = ({
+  category,
+}: PostListByCategoryPageProps): JSX.Element => {
   const router: NextRouter = useRouter()
   const limit: number = 20
 
   let prevHref: string = ''
   let nextHref: string = ''
 
-  const category: string = router.query.category as string
   const url: URL = new URL(pathUtil.absolutePath(router.asPath))
   const searchParams: URLSearchParams = new URLSearchParams(url.search)
   const query: string | null = searchParams.get('query')

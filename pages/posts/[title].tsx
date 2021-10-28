@@ -1,31 +1,38 @@
-import {
-  GetStaticPathsResult,
-  GetStaticPropsContext,
-  GetStaticPropsResult,
-  NextPage,
-} from 'next'
-import { NextRouter, useRouter } from 'next/router'
-import posts, { IPost } from '../../src/config/post.config'
+import React from 'react'
+
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 
 import CommonHead from '../../src/components/CommonHead'
 import PostDetail from '../../src/components/PostDetail'
-import React from 'react'
+import posts, { IPost } from '../../src/config/post.config'
 import { postUtil } from '../../src/utils'
 
 export type PostDetailPageProps = {
-  postTitle: string
+  post: IPost
+  content: string
 }
 
-export async function getStaticProps(
-  context: GetStaticPropsContext
-): Promise<GetStaticPropsResult<PostDetailPageProps>> {
-  const postTitle = context.params?.title as string
-  return {
-    props: { postTitle },
+export const getStaticProps: GetStaticProps = async (context) => {
+  try {
+    const title: string = context.params?.title as string
+    const post: IPost = postUtil.getPostByTitle(title)
+    const content: string = await postUtil.getContent(post)
+
+    return {
+      props: {
+        post,
+        content,
+      },
+    }
+  } catch (e) {
+    console.log(e)
+    return {
+      notFound: true,
+    }
   }
 }
 
-export async function getStaticPaths(): Promise<GetStaticPathsResult> {
+export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: posts.map((post: IPost) => ({
       params: { title: postUtil.dashedTitle(post) },
@@ -34,25 +41,18 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
   }
 }
 
-const PostDetailPage: NextPage = (): JSX.Element => {
-  const router: NextRouter = useRouter()
-  const title: string | string[] | undefined = router.query.title
-
-  if (!title || Array.isArray(title)) {
-    return <h1>No post found</h1>
-  } else {
-    const post: IPost = postUtil.getPostByTitle(title)
-    return (
-      <>
-        <CommonHead
-          title={post.title}
-          description={post.description}
-          keywords={[post.category, ...post.tags]}
-        />
-        <PostDetail post={post} />
-      </>
-    )
-  }
-}
+const PostDetailPage: NextPage<PostDetailPageProps> = ({
+  post,
+  content,
+}: PostDetailPageProps): JSX.Element => (
+  <>
+    <CommonHead
+      title={post.title}
+      description={post.description}
+      keywords={[post.category, ...post.tags]}
+    />
+    <PostDetail post={post} content={content} />
+  </>
+)
 
 export default PostDetailPage
