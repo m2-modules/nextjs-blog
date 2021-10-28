@@ -11,25 +11,26 @@ body,
   width: 100%;
   overflow: hidden;
 }
-
+* {
+  box-sizing: border-box;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
 main {
   display: flex;
   flex-direction: column;
   flex: 1;
   overflow: hidden;
 }
-
 a {
+  -webkit-tap-highlight-color: transparent;
   text-decoration: none;
   color: unset;
 }
-
-* {
-  box-sizing: border-box;
-}
-
-*::-webkit-scrollbar {
-  display: none;
+a:focus, a:active {
+  text-decoration: underline;
+  outline: none;
 }
 ul {
   padding: 0px;

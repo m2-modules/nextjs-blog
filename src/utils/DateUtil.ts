@@ -22,4 +22,14 @@ export class DateUtil {
       0
     )
   }
+
+  static formatReadable(date: number | string | Date): string {
+    if (!(date instanceof Date)) {
+      date = new Date(date)
+    }
+
+    return `${date.getFullYear()}년 ${
+      date.getMonth() + 1
+    }월 ${date.getDate()}일`
+  }
 }

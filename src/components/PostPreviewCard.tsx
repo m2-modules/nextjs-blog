@@ -4,16 +4,15 @@ import styled from 'styled-components'
 
 import { IPost } from '../config/post.config'
 import { pathUtil, postUtil } from '../utils'
+import { DateUtil } from '../utils/DateUtil'
 import TagSpreader from './TagSpreader'
 
-interface IStyledArticle {
+interface IStyledAnchor {
   hasThumbnail: boolean
 }
 
-const StyledArticle = styled.article<IStyledArticle>`
-  border-bottom: 1px solid #eee;
-  padding: 20px;
-  min-height: 240px;
+const StyledAnchor = styled.a<IStyledAnchor>`
+  flex: 1;
 
   display: grid;
   grid-gap: 10px;
@@ -24,29 +23,26 @@ const StyledArticle = styled.article<IStyledArticle>`
       ? `
       'thumbnail title title date'
       'thumbnail description description description'
-      'thumbnail tags tags tags'
     `
       : `
       'title title title date'
       'description description description description'
-      'tags tags tags tags'
     `};
 
-  & > #title {
+  & #title {
     grid-area: title;
     margin: auto 0px;
   }
-  & > #date {
+  & #date {
+    color: #666;
+    font-size: 0.8rem;
     grid-area: date;
     margin: auto;
   }
-  & > ul {
-    grid-area: tags;
-  }
-  & > #thumbnail {
+  & #thumbnail {
     grid-area: thumbnail;
   }
-  & > #description {
+  & #description {
     grid-area: description;
   }
 
@@ -67,11 +63,20 @@ const StyledArticle = styled.article<IStyledArticle>`
         'tags tags'
       `};
     }
-    & > #date {
+    & #date {
       grid-area: date;
       margin: auto 0px auto auto;
     }
   }
+`
+
+const StyledArticle = styled.article`
+  border-bottom: 1px solid #eee;
+  padding: 20px;
+  min-height: 240px;
+
+  display: flex;
+  flex-direction: column;
 `
 
 const StyledImg = styled.img`
@@ -95,24 +100,30 @@ const PostPreviewCard = (props: PostPreviewCardProps): JSX.Element => {
   const post: IPost = props.post
 
   return (
-    <StyledArticle hasThumbnail={Boolean(post.thumbnailName)}>
-      <a href={pathUtil.absolutePath(`/posts/${postUtil.dashedTitle(post)}`)}>
+    <StyledArticle>
+      <StyledAnchor
+        hasThumbnail={Boolean(post.thumbnailName)}
+        href={pathUtil.absolutePath(`/posts/${postUtil.dashedTitle(post)}`)}
+      >
         <h2 id="title">{post.title}</h2>
-      </a>
-      <p id="date">{new Date(post.publishedAt).toLocaleDateString()}</p>
+
+        <p id="date">{DateUtil.formatReadable(post.publishedAt)}</p>
+
+        {post.thumbnailName ? (
+          <StyledImg
+            id="thumbnail"
+            src={postUtil.getThumbnailSrc(post)}
+            alt={post.title}
+          />
+        ) : (
+          ''
+        )}
+        <p style={{ margin: 0 }} id="description">
+          {post.description}
+        </p>
+      </StyledAnchor>
+
       <TagSpreader tags={post.tags} />
-      {post.thumbnailName ? (
-        <StyledImg
-          id="thumbnail"
-          src={postUtil.getThumbnailSrc(post)}
-          alt={post.title}
-        />
-      ) : (
-        ''
-      )}
-      <p style={{ margin: 0 }} id="description">
-        {post.description}
-      </p>
     </StyledArticle>
   )
 }
