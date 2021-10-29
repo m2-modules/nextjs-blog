@@ -112,7 +112,7 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
 
         {post.thumbnailName ? (
           <StyledImg
-            src={postUtil.getThumbnailSrc(post)}
+            src={postUtil.getThumbnailPath(post)}
             alt={`${post.title}`}
           />
         ) : (
