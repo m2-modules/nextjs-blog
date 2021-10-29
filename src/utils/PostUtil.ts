@@ -1,7 +1,5 @@
-import marked from 'marked'
 import path from 'path'
 
-import { blogConfig } from '../config/blog.config'
 import { IPost } from '../config/post.config'
 import { DateUtil } from './DateUtil'
 
@@ -80,32 +78,14 @@ export class PostUtil {
     return Boolean(this.getPosts(page, limit, query, category).length)
   }
 
-  getThumbnailSrc(post: IPost): string {
-    return this.buildThumbnailPath(post)
+  getMarkdownPath(post: IPost): string {
+    return path.join(this.rootPath, post.category, post.fileName)
   }
 
-  async getRawContent(post: IPost): Promise<string> {
-    const response: Response = await fetch(this.buildContentPath(post))
-
-    if (!response.ok) throw new Error(await response.text())
-
-    return await response.text()
-  }
-
-  async getContent(post: IPost): Promise<string> {
-    return marked(await this.getRawContent(post))
-  }
-
-  private buildContentPath(post: IPost): string {
-    const url: URL = new URL(blogConfig.siteURL)
-    url.pathname = path.join(this.rootPath, post.category, post.fileName)
-    return url.href
-  }
-
-  private buildThumbnailPath(post: IPost): string {
+  getThumbnailPath(post: IPost): string {
     if (!post.thumbnailName) throw new Error('No specified thumbnail')
 
-    return '/' + path.join(this.rootPath, 'assets', post.thumbnailName)
+    return path.join('/', this.rootPath, 'assets', post.thumbnailName)
   }
 
   dashedTitle(post: IPost): string {

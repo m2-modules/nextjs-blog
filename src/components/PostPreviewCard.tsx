@@ -1,10 +1,11 @@
-import { pathUtil, postUtil } from '../utils'
-
-import { DateUtil } from '../utils/DateUtil'
-import { IPost } from '../config/post.config'
 import React from 'react'
-import TagSpreader from './TagSpreader'
+
 import styled from 'styled-components'
+
+import { IPost } from '../config/post.config'
+import { pathUtil, postUtil } from '../utils'
+import { DateUtil } from '../utils/DateUtil'
+import TagSpreader from './TagSpreader'
 
 interface IStyledAnchor {
   hasThumbnail: boolean
@@ -110,7 +111,7 @@ const PostPreviewCard = (props: PostPreviewCardProps): JSX.Element => {
         {post.thumbnailName ? (
           <StyledImg
             id="thumbnail"
-            src={postUtil.getThumbnailSrc(post)}
+            src={postUtil.getThumbnailPath(post)}
             alt={post.title}
           />
         ) : (
