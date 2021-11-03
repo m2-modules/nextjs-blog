@@ -1,3 +1,8 @@
+export interface IReference {
+  title: string
+  url: string
+}
+
 export interface IPost {
   title: string
   fileName: string
@@ -7,6 +12,7 @@ export interface IPost {
   publishedAt: string
   thumbnailName?: string
   tags: string[]
+  references?: IReference[]
 }
 
 const posts: IPost[] = [
@@ -18,6 +24,13 @@ const posts: IPost[] = [
     published: true,
     publishedAt: '2021-01-01',
     tags: ['sample'],
+    references: [{
+      title: 'Naver',
+      url: 'https://naver.com'
+    }, {
+      title: 'Google',
+      url: 'https://google.com'
+    }]
   },
   {
     title: `Sample title 1-2`,

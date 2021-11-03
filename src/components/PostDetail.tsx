@@ -8,6 +8,7 @@ import { FormatListNumbered } from '@material-ui/icons'
 import markdownStyles from '../assets/styles/markdown.module.css'
 import ContentIndexer from '../components/ContentIndexer/ContentIndexer'
 import ContentSection from '../components/ContentSection'
+import ReferencesBlock from '../components/ReferencesBlock'
 import { layoutConfig } from '../config/layout.config'
 import { IPost } from '../config/post.config'
 import useHeadroomShrink from '../hooks/use-headroom-shrink'
@@ -119,18 +120,29 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
           ''
         )}
 
-        <div
+        <section
           className={markdownStyles.markdown}
           dangerouslySetInnerHTML={{
             __html: content || '',
           }}
         />
 
-        <h2>Tags</h2>
-        <TagSpreader tags={post.tags} />
+        {post.references?.length ? (
+          <section>
+            <h2>References</h2>
+            <ReferencesBlock references={post.references} />
+          </section>
+        ) : (
+          ''
+        )}
+
+        <section>
+          <h2>Tags</h2>
+          <TagSpreader tags={post.tags} />
+        </section>
 
         {layoutConfig.postDetail?.utterances ? (
-          <>
+          <section>
             <h2>Comments</h2>
             <Utterances
               repo={layoutConfig.postDetail.utterances.repo}
@@ -138,7 +150,7 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
               issueTerm={layoutConfig.postDetail.utterances.issueTerm}
               issueLabel={layoutConfig.postDetail.utterances.issueTerm}
             />
-          </>
+          </section>
         ) : (
           ''
         )}

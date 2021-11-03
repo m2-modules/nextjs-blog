@@ -72,6 +72,7 @@
       'main main main'
       'footer footer footer';
     grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr auto;
   }
   #__next.shrink-headroom > header > #title {
     margin: 10px;
