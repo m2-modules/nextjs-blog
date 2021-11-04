@@ -2,15 +2,11 @@ import fs from 'fs'
 import marked from 'marked'
 import path from 'path'
 
-export class APIUtil {
-  static publicPath: string = './public'
+export class MarkdownUtil {
+  static readonly publicPath: string = './public'
 
   static getMarkdownContent(mdFilePath: string): string {
-    return marked(this.readFileSync(mdFilePath), { gfm: true })
-  }
-
-  static markedIt(content: string): string {
-    return marked(content, { gfm: true })
+    return marked(this.readFileSync(mdFilePath))
   }
 
   static readFileSync(filePath: string): string {

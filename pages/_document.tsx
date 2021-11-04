@@ -1,3 +1,5 @@
+import React from 'react'
+
 import Document, {
   DocumentContext,
   Head,
@@ -5,9 +7,8 @@ import Document, {
   Main,
   NextScript,
 } from 'next/document'
-
-import React from 'react'
 import { ServerStyleSheet } from 'styled-components'
+
 import { blogConfig } from '../src/config/blog.config'
 
 export default class MyDocument extends Document {
@@ -40,7 +41,10 @@ export default class MyDocument extends Document {
   render(): JSX.Element {
     return (
       <Html lang={blogConfig.lang || 'ko'}>
-        <Head />
+        <Head>
+          <script defer src="/prism.js"></script>
+        </Head>
+
         <body>
           <Main />
           <NextScript />

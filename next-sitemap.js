@@ -1,6 +1,11 @@
-const siteUrl = require('./package.json').siteURL
+const siteUrl = require('./package.json').siteURL || 'http://localhost'
 
-if (!siteUrl) throw new Error('There is no specified site URL in package.json')
+if (!siteUrl) {
+  console.warn(
+    'There is no specified siteURL in `package.json` to create sitemap.xml'
+  )
+  console.warn('it will be generated based on `http://localhost` by default.')
+}
 
 module.exports = {
   siteUrl,
