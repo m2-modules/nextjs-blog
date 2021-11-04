@@ -1,5 +1,6 @@
 import '../src/assets/styles/globals.css'
 import '../src/assets/styles/layout.css'
+import '../src/assets/styles/prism.css'
 
 import React from 'react'
 

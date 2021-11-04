@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import DrawPanel from '@m2-modules/draw-panel'
 import { FormatListNumbered } from '@material-ui/icons'
 
-import markdownStyles from '../assets/styles/markdown.module.css'
 import ContentIndexer from '../components/ContentIndexer/ContentIndexer'
 import ContentSection from '../components/ContentSection'
 import ReferencesBlock from '../components/ReferencesBlock'
@@ -121,7 +120,6 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
         )}
 
         <section
-          className={markdownStyles.markdown}
           dangerouslySetInnerHTML={{
             __html: content || '',
           }}

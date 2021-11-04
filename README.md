@@ -17,9 +17,10 @@
    1. [Sitemap.xml](#sitemapxml)
    1. [Robots.txt](#robotstxt)
 1. [PWA](#pwa)
-1. [Components](components)
-   1. [Copyright Display](copyright-display)
-   1. [Comments on posting](comments-on-posting)
+1. [Components](#components)
+   1. [Copyright Display](#copyright-display)
+   1. [Comments on posting](#comments-on-posting)
+   1. [PrismJS - syntax highlighting](#prismjs---syntax-highlighting)
 
 ---
 
@@ -44,6 +45,8 @@
    - `CATEGORY` will be used to sort your post.
    - `ANY-FILE_NAME` is element of consisting URL path.
    - During building time `file name` will be changed into URL friendly pattern. Therefore it is recommended to use `English` only
+
+1. It's recommended to start from `h2` tag as top level of heading in post content. Because every post detail page has `h1` tag already which is created based on title and description of post.
 
 1. Add configuration for newly created posting
    - Open up `post.config.ts` file from `/src/config`
@@ -164,3 +167,9 @@ Detail of posting page has component to render [`Utterances`](https://utteranc.e
 If you want to implement it you need to configure few properties in `layout.config.ts`
 
 More details about the properties you can refer [`Utterances`](https://utteranc.es/) page.
+
+### PrismJS - syntax highlighting
+
+If your posting content has `<code>` block its syntax will be highlighted by default via [`PrismJS`](https://prismjs.com/).
+If you want to change it you can check `src/assets/styles/prism.css` file and `public/prism.js`.
+`prism.js` file is loaded in `_pages/_document.tsx`.
