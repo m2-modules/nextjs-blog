@@ -7,7 +7,7 @@
     "build": "npm run lint && npm run test && next build",
     "start": "next start",
     "export": "npm run build && next export",
-    "docs": "next export -o ./docs && touch ./docs/.nojekyll && next-sitemap",
+    "docs": "npm run build && next export -o ./docs && touch ./docs/.nojekyll && next-sitemap",
     "lint": "next lint",
     "test": "jest",
     "pwa:init": "node ./pwa-init"
