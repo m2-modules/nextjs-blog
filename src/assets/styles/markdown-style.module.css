@@ -657,9 +657,9 @@
   margin-top: 0;
 }
 
-.markdown blockquote > :last-child {
+/* .markdown blockquote > :last-child {
   margin-bottom: 0;
-}
+} */
 
 .markdown h1,
 .markdown h2,
