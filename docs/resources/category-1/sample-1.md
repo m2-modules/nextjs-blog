@@ -15,11 +15,19 @@
 console.log('sample')
 ```
 
+1. List item 1
+   - list item 1-1
+1. List item 2
+   - list item 2-1
+   - list item 2-2
+
+`<html>`, `console.log('test')`
+
 ## Sample second title 1
 
 ~~Sample~~
 **Sample**
-**Sample**
+_Sample_
 
 ### Sample second sub title 1
 
