@@ -150,7 +150,7 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
               repo={layoutConfig.postDetail.utterances.repo}
               theme={layoutConfig.postDetail.utterances.theme}
               issueTerm={layoutConfig.postDetail.utterances.issueTerm}
-              issueLabel={layoutConfig.postDetail.utterances.issueTerm}
+              issueLabel={layoutConfig.postDetail.utterances.issueLabel}
             />
           </section>
         ) : (
