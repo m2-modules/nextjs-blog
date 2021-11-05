@@ -1,19 +1,18 @@
 import React, { RefObject, useCallback, useRef, useState } from 'react'
 
-import styled from 'styled-components'
-
-import DrawPanel from '@m2-modules/draw-panel'
-import { FormatListNumbered } from '@material-ui/icons'
-
 import ContentIndexer from '../components/ContentIndexer/ContentIndexer'
 import ContentSection from '../components/ContentSection'
-import ReferencesBlock from '../components/ReferencesBlock'
-import { layoutConfig } from '../config/layout.config'
+import DrawPanel from '@m2-modules/draw-panel'
+import { FormatListNumbered } from '@material-ui/icons'
 import { IPost } from '../config/post.config'
-import useHeadroomShrink from '../hooks/use-headroom-shrink'
-import { postUtil } from '../utils'
+import ReferencesBlock from '../components/ReferencesBlock'
 import TagSpreader from './TagSpreader'
 import Utterances from './Utterances'
+import { layoutConfig } from '../config/layout.config'
+import markdownStyle from '../assets/styles/markdown-style.module.css'
+import { postUtil } from '../utils'
+import styled from 'styled-components'
+import useHeadroomShrink from '../hooks/use-headroom-shrink'
 
 const StyledArticle = styled.article`
   display: flex;
@@ -65,6 +64,10 @@ const StyledImg = styled.img`
 
 const PostDetailContentSection = styled(ContentSection)`
   padding: 0px 10px;
+
+  & a {
+    color: #0366d6;
+  }
 `
 
 export type PostDetailProps = {
@@ -120,6 +123,7 @@ const PostDetail = (props: PostDetailProps): JSX.Element => {
         )}
 
         <section
+          className={markdownStyle.markdown}
           dangerouslySetInnerHTML={{
             __html: content || '',
           }}
