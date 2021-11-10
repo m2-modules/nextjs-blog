@@ -68,7 +68,8 @@
 
   #__next.shrink-headroom {
     grid-template-areas:
-      'header nav nav'
+      'header . .'
+      'nav nav nav'
       'main main main'
       'footer footer footer';
     grid-template-columns: auto 1fr;
